@@ -152,9 +152,9 @@ class StoresController extends Controller {
 			$data->active 	= Input::get("active", 0);	
 			$data->save();
 			
-			if (Input::hasFile('file')) {
-				if (getimagesize(Input::file('file')->getRealPath())) {
-					$data->image = Input::file('file')->getRealPath();
+			if (Input::hasFile('image')) {
+				if (getimagesize(Input::file('image')->getRealPath())) {
+					$data->image = Input::file('image')->getRealPath();
 					$data->flush();
 				}	
 			}

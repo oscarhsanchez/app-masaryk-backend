@@ -13,6 +13,7 @@ class User extends CartalystUser {
         'remember_token',
         'city',
         'birthday',
+        'facebook_id',
     ];
 
 }	

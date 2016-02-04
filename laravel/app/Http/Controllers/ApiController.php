@@ -11,7 +11,6 @@ class ApiController extends Controller {
 	| API Controller
 	|--------------------------------------------------------------------------
 	*/
-	
 
 	public $restful  = true;
 	public $errorMsg = [
@@ -28,9 +27,7 @@ class ApiController extends Controller {
 	 * 
 	 * @access public
 	 * @return void
-	 */
-	 
-	 
+	 */	 
 	public function __construct () {
 	}
     
@@ -42,7 +39,7 @@ class ApiController extends Controller {
    	 * @return void
    	 */
    	public function getIndex() {
-	   	return "";
+	   	return View::make("api.form");
    	} 
    
    
@@ -68,10 +65,10 @@ class ApiController extends Controller {
 			unset($user->deleted_at);
 			unset($user->last_login);
 			
-			return Response::json(array("status"=>true, "service"=>"login", "data"=>$user));
+			return Response::json(array("success"=>true, "service"=>"login", "data"=>$user));
 		}
 		
-		return Response::json(array("status"=>false, "service"=>"login", "error_code"=>503, "error_message"=>"Bad credentials"));
+		return Response::json(array("success"=>false, "service"=>"login", "error_code"=>403, "error_message"=>"Verifica tu usuario y/o contraseña."));
 		
     }
     
@@ -97,14 +94,15 @@ class ApiController extends Controller {
 					 			
 		$validation = Validator::make($input, $rules, $this->errorMsg);
 		if ($validation->fails()) {
-			$errors = $validation->errors();
-			return Response::json(array("status"=>false, "service"=>"register", "error_code"=>503, "error_message"=>$errors));
+			$errors  = $validation->errors()->all();
+			return Response::json(array("success"=>false, "service"=>"register", "error_code"=>400, "error_message"=>$errors));
 			
 		} else {
 			
 			$remember_token = bcrypt(str_random(20));
 			
 			$fields = [	
+				"facebook_id" 	 => Input::get('fb_id', ''),
 				"email" 	 	 => Input::get('email'),
 				"password" 	 	 => Input::get('password'),
 				"first_name" 	 => Input::get('first_name'),
@@ -113,17 +111,70 @@ class ApiController extends Controller {
 				"birthday"  	 => Input::get('birthday', ''),
 				"city"  		 => Input::get('city', 'Mexico'),
 				"remember_token" => $remember_token,
-			];			
+				"facebook_token" => Input::get('token', ''),
+			];		
 			
 			$user = Sentinel::registerAndActivate($fields);
 			Sentinel::login($user);
 
-			return Response::json(array("status"=>true, "service"=>"register", "data"=>array("remember_token"=>$remember_token)));
+			return Response::json(array("success"=>true, "service"=>"register", "data"=>array("remember_token"=>$remember_token)));
 						
 		}
 		
     }
-      
+         
+    
+    
+    /**
+     * register function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function postFacebook() {
+	    	    
+	    $token = Input::get("token", "");
+	    $graph = "https://graph.facebook.com/me/?fields=email,id,birthday,hometown,first_name,last_name&access_token=".$token;
+	    $data  = json_decode(file_get_contents($graph));
+	    
+	    if (isset($data->error)) {
+		    return Response::json(array("success"=>false, "service"=>"facebook", "error_code"=>403, "error_message"=>"No se pudieron obtener los datos de Facebook."));
+	    } else {
+		    
+		    $user = User::where("facebook_id", "=", $data->id)->first();
+		    		    
+		    if ($user) {
+			    
+			    $user = Sentinel::findById($user->id);
+				Sentinel::loginAndRemember($user);
+				return Response::json(array("success"=>true, "service"=>"facebook", "data"=>array("logged"=>true)));
+				 
+		    } else {
+			    
+			    $data->logged = false;
+			    $data->token  = $token;
+			    
+			    if (isset($data->birthday)) {
+				    $birthday = explode("/", $data->birthday);
+				    $data->birthday = $birthday[2]."-".$birthday[0]."-".$birthday[1];
+			    } else {
+				    $data->birthday = "0000-00-00";
+			    }
+			    
+			    if (isset($data->hometown)) {
+				    $hometown = explode(",", $data->hometown->name);
+				    $data->hometown = trim($hometown[0]);
+			    } else {
+				    $data->hometown = "";
+			    }
+			    
+			    return Response::json(array("success"=>true, "service"=>"facebook", "data"=>$data));
+			    
+		    }
+		    
+	    }
+		
+    } 
     
     
     /**
@@ -139,14 +190,14 @@ class ApiController extends Controller {
 					 			
 		$validation = Validator::make(Input::all(), $rules);
 		if ($validation->fails()) {
-			return Response::json(array("status"=>false, "service"=>"recover", "error_code"=>503, "error_message"=>"Bad credentials"));
+			return Response::json(array("success"=>false, "service"=>"recover", "error_code"=>400, "error_message"=>"Verifica el formato de tu correo."));
 			
 		} else {
 			
 			$user = Sentinel::findByCredentials(['login' => $email]);
 			
 			if (!$user) {
-				return Response::json(array("status"=>false, "service"=>"recover", "error_code"=>503, "error_message"=>"Bad credentials"));
+				return Response::json(array("success"=>false, "service"=>"recover", "error_code"=>403, "error_message"=>"Correo no encontrado."));
 			}
 			
 			$reminder = Reminder::create($user);
@@ -157,7 +208,7 @@ class ApiController extends Controller {
 				$message->to($email, $name)->subject('Camina Masarik - Recuperar Contraseña');
 			});
 		
-			return Response::json(array("status"=>true, "service"=>"recover"));
+			return Response::json(array("success"=>true, "service"=>"recover"));
 	    }	
     }  
     
@@ -208,9 +259,9 @@ class ApiController extends Controller {
     public function getVerify() {
 	    
 	    if (!$user = $this->_validate()) {
-			return Response::json(array("status"=>false, "service"=>"verify", "error_code"=>501, "error_message"=>"User not logged"));
+			return Response::json(array("success"=>false, "service"=>"verify", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		} else {
-			return Response::json(array("status"=>true, "service"=>"verify"));
+			return Response::json(array("success"=>true, "service"=>"verify"));
 		}
 	  	
     }  
@@ -230,15 +281,16 @@ class ApiController extends Controller {
 	    $email = Input::get("email", "");
 	    
 	    $user  = User::where("remember_token", "=", trim($token))
-	   			     ->where("remember_token", "!=", "")
-	    			 ->where("email", "=", $email)->first();
+	   			     ->where("remember_token", "!=", "")->first();
+	   			     
+	   			     //->where("email", "=", $email)
 	  	
 	  	if ($user) {
 		  	Sentinel::login(Sentinel::findById($user->id));
-		  	return Response::json(array("status"=>true, "service"=>"verify"));
+		  	return Response::json(array("success"=>true, "service"=>"verify"));
 	  	}
 	  	
-	  	return Response::json(array("status"=>false, "service"=>"verify", "error_code"=>501, "error_message"=>"User not logged"));
+	  	return Response::json(array("success"=>false, "service"=>"verify", "error_code"=>403, "error_message"=>"Sesión no válida."));
 	  	
     } 
       
@@ -253,7 +305,7 @@ class ApiController extends Controller {
     public function getProfile() {
 	    
 	    if (!$user = $this->_validate()) {
-			return Response::json(array("status"=>false, "service"=>"profile", "error_code"=>501, "error_message"=>"User not logged"));
+			return Response::json(array("success"=>false, "service"=>"profile", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
 		
 		unset($user->password);
@@ -264,7 +316,7 @@ class ApiController extends Controller {
 		unset($user->deleted_at);
 		unset($user->last_login);
 		
-		return Response::json($user);
+		return Response::json(array("success"=>true, "service"=>"profile", "data"=>$user));
 		
     }
     
@@ -272,7 +324,7 @@ class ApiController extends Controller {
 	    
 	    
 	    if (!$user = $this->_validate()) {
-			return Response::json(array("status"=>false, "service"=>"profile", "error_code"=>501, "error_message"=>"User not logged"));
+			return Response::json(array("success"=>false, "service"=>"profile", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
 		
 		$input = Input::all();
@@ -281,7 +333,7 @@ class ApiController extends Controller {
 					"last_name"  => "required|between:3,50"
 				];
 					   
-		if ($input["email"] != $data->email ) {
+		if ($input["email"] != $user->email) {
 			$rules["email"] = "required|email|unique:users,email,".$input["email"];
 		}
 		
@@ -293,8 +345,8 @@ class ApiController extends Controller {
 		
 		$validation = Validator::make($input, $rules, $this->errorMsg);
 		if ($validation->fails()) {
-			$errors = $validation->errors();
-			return Response::json(array("status"=>false, "service"=>"register", "error_code"=>503, "error_message"=>$errors));
+			$errors = $validation->errors()->all();
+			return Response::json(array("success"=>false, "service"=>"profile", "error_code"=>400, "error_message"=>$errors));
 			
 		} else {
 			
@@ -312,7 +364,8 @@ class ApiController extends Controller {
 			}
 			
 			Sentinel::update($user, $fields);
-			return Response::json(array("status"=>true, "service"=>"register"));
+			return $this->getProfile();
+			//Response::json(array("success"=>true, "service"=>"profile"));
 						
 		}
 
@@ -330,15 +383,23 @@ class ApiController extends Controller {
     public function getPromos() {
 	    
 	    if (!$user = $this->_validate()) {
-			return Response::json(array("status"=>false, "service"=>"promos", "error_code"=>501, "error_message"=>"User not logged"));
+			return Response::json(array("success"=>false, "service"=>"promos", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
 	    
 	   	$items = Promo::where("active", "=", 1)->get(array("id", "title"));
 	   	foreach ($items as $item) {
-		   	$item->thumb = $item->thumb(100, 600);
+		   	
+		   	$thumb = $item->thumb(400, 400);
+		   	$full  = $item->thumb(800, 1200);
+		   	$sizet = getimagesize($item->getPath("c", "400x400"));
+		   	$sizef = getimagesize($item->getPath("c", "800x1200"));
+		   	
+		   	$item->thumb  = array("src"=>$thumb, "width"=>$sizet[0], "height"=>$sizet[1]);
+		   	$item->full   = array("src"=>$full,  "width"=>$sizef[0], "height"=>$sizef[1]);
+		   
 	   	}
 		
-		return Response::json(array("status"=>true, "promos"=>"stores", "data"=>$items));
+		return Response::json(array("success"=>true, "service"=>"promos", "data"=>$items));
 		
     }
     
@@ -353,7 +414,7 @@ class ApiController extends Controller {
     public function getStores() {
 	    
 	   	if (!$user = $this->_validate()) {
-			return Response::json(array("status"=>false, "service"=>"stores", "error_code"=>501, "error_message"=>"User not logged"));
+			return Response::json(array("success"=>false, "service"=>"stores", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
 
 	   	$items = Store::leftJoin("stores_type", "stores_type.id", "=", "stores.type_id")
@@ -365,7 +426,7 @@ class ApiController extends Controller {
 		   	$item->thumb = $item->thumb(100, 600);
 	   	}
 		
-		return Response::json(array("status"=>true, "service"=>"stores", "data"=>$items));
+		return Response::json(array("success"=>true, "service"=>"stores", "data"=>$items));
 		
     }
     
@@ -381,7 +442,7 @@ class ApiController extends Controller {
 	    
 	    
 	    if (!$user = $this->_validate()) {
-			return Response::json(array("status"=>false, "service"=>"activities", "error_code"=>501, "error_message"=>"User not logged"));
+			return Response::json(array("success"=>false, "service"=>"activities", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
 
 	   	$items = Activity::leftJoin("activities_type", "activities_type.id", "=", "activities.type_id")
@@ -393,7 +454,7 @@ class ApiController extends Controller {
 		   	$item->thumb = $item->thumb(100, 600);
 	   	}
 		
-		return Response::json(array("status"=>true, "service"=>"activities", "data"=>$items));
+		return Response::json(array("success"=>true, "service"=>"activities", "data"=>$items));
 		
     }
     

@@ -16,7 +16,7 @@
     {!! HTML::style('assets/css/jquery.chosen.min.css') !!}
     {!! HTML::style('assets/css/admin.css') !!}    
         
-	{!! HTML::script('http://maps.googleapis.com/maps/api/js?key=AIzaSyDeFu5Xkl9Do1Ty2UqWX8MfHyyuqV45OHY&amp;sensor=false&amp;libraries=places') !!}
+	{!! HTML::script('http://maps.googleapis.com/maps/api/js?key=AIzaSyDeFu5Xkl9Do1Ty2UqWX8MfHyyuqV45OHY&amp;libraries=places') !!}
 	{!! HTML::script('https://www.google.com/jsapi ') !!} 
 	{!! HTML::script('assets/js/modernizr.js') !!}
 	{!! HTML::script('assets/js/moment.min.js') !!}   

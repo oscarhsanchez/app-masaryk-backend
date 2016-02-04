@@ -146,19 +146,19 @@ class ActivitiesController extends Controller {
 		} else {
 
 			$data->title  		= Input::get('title');
+			$data->description  = Input::get('description');
 			$data->address  	= Input::get('address');
 			$data->date_from  	= Input::get('date_from');
 			$data->date_to  	= Input::get('date_to');
-			$data->phone  		= Input::get('phone');
 			$data->lat  		= Input::get('latitude');
 			$data->lng  		= Input::get('longitude');
 			$data->type_id  	= Input::get('type');	
 			$data->active 		= Input::get("active", 0);	
 			$data->save();
 			
-			if (Input::hasFile('file')) {
-				if (getimagesize(Input::file('file')->getRealPath())) {
-					$data->image = Input::file('file')->getRealPath();
+			if (Input::hasFile('image')) {
+				if (getimagesize(Input::file('image')->getRealPath())) {
+					$data->image = Input::file('image')->getRealPath();
 					$data->flush();
 				}	
 			}

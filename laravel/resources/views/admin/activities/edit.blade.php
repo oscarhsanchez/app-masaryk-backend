@@ -1,13 +1,13 @@
 @extends('admin.template')
 
 @section('title')
-	Editar Local
+	Editar Actividad
 @endsection
 
 @section('content')
 
 <div class="page-header">
-	<h2>Editar Local</h2>
+	<h2>Editar Actividad</h2>
 </div>
 
 @if (Session::get('message') || Session::get('error'))
@@ -30,9 +30,16 @@
 </div>
 
 <div class="form-group">
+	{!! Form::label('description', 'Descripción', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		{!! Form::textarea('description', Input::old('description', $data->description), array('class'=>'form-control')) !!}
+	</div>
+</div>
+
+<div class="form-group">
 	{!! Form::label('address', 'Dirección', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
-		{!! Form::textarea('address', Input::old('address', $data->address), array('class'=>'form-control')) !!}
+		{!! Form::text('address', Input::old('address', $data->address), array('class'=>'form-control')) !!}
 	</div>
 </div>
 
@@ -53,13 +60,6 @@
 			{!! Form::text('date_to', Input::old('date_to', $data->date_to), array('class'=>'form-control')) !!}
 			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
         </div>
-	</div>
-</div>
-
-<div class="form-group">
-	{!! Form::label('phone', 'Teléfono', array('class' => 'col-sm-2 control-label')) !!}
-	<div class="col-sm-10">
-		{!! Form::text('phone', Input::old('phone', $data->phone), array('class'=>'form-control')) !!}
 	</div>
 </div>
 
