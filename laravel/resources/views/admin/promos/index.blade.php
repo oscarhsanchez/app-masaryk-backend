@@ -49,7 +49,7 @@
 		<tbody>
 		@foreach ($rows as $x => $row)
 			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->active == 1 ) disabled @endif">
-				<td><span class="avatar"><img src="{!! $row->thumb(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
+				<td><span class="avatar"><img src="{!! $row->crop(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
 				<td>{!! $row->title !!}</td>
 				<td>{!! $row->store  ? $row->store->title : "N/A" !!}</td>
 				<td>{!! $row->beacon ? $row->beacon->uuid : "N/A" !!}</td>
@@ -57,7 +57,7 @@
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="action pull-right">
+				<td class="action text-right">
 					<a href='{!! URL::to('admin/promos/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
 					<a href='{!! URL::to('admin/promos/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span><!-- Eliminar --></a>
 				</td>

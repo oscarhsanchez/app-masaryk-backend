@@ -5,3 +5,8 @@
 [03-Feb-2016 06:04:11 UTC] PHP Parse error:  syntax error, unexpected ';' in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 168
 [03-Feb-2016 06:07:00 UTC] PHP Fatal error:  Cannot use object of type stdClass as array in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 138
 [03-Feb-2016 08:00:20 UTC] PHP Fatal error:  Class 'App\Models\Image' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Models/Promo.php on line 20
+[19-Feb-2016 00:23:49 UTC] PHP Parse error:  syntax error, unexpected '}' in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 314
+[19-Feb-2016 00:24:21 UTC] PHP Fatal error:  Class 'App\Models\Image' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Models/User.php on line 40
+[19-Feb-2016 00:32:13 UTC] PHP Fatal error:  Class 'App\Http\Controllers\URL' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 315
+[19-Feb-2016 01:21:57 UTC] PHP Fatal error:  Class 'App\Models\URL' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Models/User.php on line 46
+[19-Feb-2016 02:15:28 UTC] PHP Parse error:  syntax error, unexpected ''last_nam' (T_ENCAPSED_AND_WHITESPACE) in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 373

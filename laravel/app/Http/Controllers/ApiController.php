@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Response, DB, Mail, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity;
+use Input, Validator, View, Response, DB, Mail, URL, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Reminder;
 
@@ -143,7 +143,7 @@ class ApiController extends Controller {
 		    
 		    $user = User::where("facebook_id", "=", $data->id)->first();
 		    		    
-		    if ($user) {
+		    if (!$user) {
 			    
 			    $user = Sentinel::findById($user->id);
 				Sentinel::loginAndRemember($user);
@@ -275,7 +275,7 @@ class ApiController extends Controller {
      * @access public
      * @return void
      */
-    public function postRenew() {
+    public function anyRenew() {
 	    
 	    $token = Input::get("remember_token", "");
 	    $email = Input::get("email", "");
@@ -287,10 +287,10 @@ class ApiController extends Controller {
 	  	
 	  	if ($user) {
 		  	Sentinel::login(Sentinel::findById($user->id));
-		  	return Response::json(array("success"=>true, "service"=>"verify"));
+		  	return Response::json(array("success"=>true, "service"=>"renew"));
 	  	}
 	  	
-	  	return Response::json(array("success"=>false, "service"=>"verify", "error_code"=>403, "error_message"=>"Sesión no válida."));
+	  	return Response::json(array("success"=>false, "service"=>"renew", "error_code"=>403, "error_message"=>"Sesión no válida."));
 	  	
     } 
       
@@ -307,6 +307,20 @@ class ApiController extends Controller {
 	    if (!$user = $this->_validate()) {
 			return Response::json(array("success"=>false, "service"=>"profile", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
+		
+		if (!$user->image) {
+			if ($user->facebook_id) {
+				$user->avatar = "http://graph.facebook.com/".$user->facebook_id."/picture?type=large";
+			} else {
+				$user->avatar = URL::to("assets/images/avatar.jpg");
+			}
+		} else {
+			$user->avatar = $user->crop(300, 300);
+		}
+		
+		
+		
+		//$user->avatar = array();
 		
 		unset($user->password);
 		unset($user->remember_token);
@@ -337,10 +351,13 @@ class ApiController extends Controller {
 			$rules["email"] = "required|email|unique:users,email,".$input["email"];
 		}
 		
-		$password_validate = strlen($input["password"]) > 0 || strlen($input["password"]);
-		if ($password_validate) {
-			$rules["password"] 	= "required|between:6,16";
-			$rules["cpassword"] = "required|same:password";
+		$password_validate = false;
+		if (isset($input["password"])) {
+			$password_validate = strlen($input["password"]) > 0 || strlen($input["password"]);
+			if ($password_validate) {
+				$rules["password"] 	= "required|between:6,16";
+				$rules["cpassword"] = "required|same:password";
+			}
 		}
 		
 		$validation = Validator::make($input, $rules, $this->errorMsg);
@@ -349,7 +366,6 @@ class ApiController extends Controller {
 			return Response::json(array("success"=>false, "service"=>"profile", "error_code"=>400, "error_message"=>$errors));
 			
 		} else {
-			
 			
 			$fields = [	
 				"email" 	 	 => Input::get('email'),
@@ -363,9 +379,15 @@ class ApiController extends Controller {
 				$fields['password'] = Input::get('password');
 			}
 			
+			if (Input::hasFile('image')) {
+				if (getimagesize(Input::file('image')->getRealPath())) {
+					$user->image = Input::file('image')->getRealPath();
+					$user->flush();
+				}	
+			}
+			
 			Sentinel::update($user, $fields);
 			return $this->getProfile();
-			//Response::json(array("success"=>true, "service"=>"profile"));
 						
 		}
 
@@ -389,10 +411,10 @@ class ApiController extends Controller {
 	   	$items = Promo::where("active", "=", 1)->get(array("id", "title"));
 	   	foreach ($items as $item) {
 		   	
-		   	$thumb = $item->thumb(400, 400);
+			$thumb = $item->thumb(400, 400);
 		   	$full  = $item->thumb(800, 1200);
-		   	$sizet = getimagesize($item->getPath("c", "400x400"));
-		   	$sizef = getimagesize($item->getPath("c", "800x1200"));
+		   	$sizet = getimagesize($item->getPath("c", "thumb.400x400"));
+		   	$sizef = getimagesize($item->getPath("c", "thumb.800x1200"));
 		   	
 		   	$item->thumb  = array("src"=>$thumb, "width"=>$sizet[0], "height"=>$sizet[1]);
 		   	$item->full   = array("src"=>$full,  "width"=>$sizef[0], "height"=>$sizef[1]);
@@ -423,7 +445,12 @@ class ApiController extends Controller {
 	   				  			  "stores.lat", "stores.lng", "stores_type.name AS type"));
 	   					
 	   	foreach ($items as $item) {		   	
-		   	$item->thumb = $item->thumb(100, 600);
+		   	
+		   	$thumb = $item->crop(100, 100);
+		   	$full  = $item->crop(800, 400);
+		   	$item->thumb  = array("src"=>$thumb, "width"=>100, "height"=>100);
+		   	$item->full   = array("src"=>$full,  "width"=>800, "height"=>400);
+		   	
 	   	}
 		
 		return Response::json(array("success"=>true, "service"=>"stores", "data"=>$items));
@@ -468,6 +495,10 @@ class ApiController extends Controller {
 
 		$data = Sentinel::check();
 		if ($data === null) {
+			return false;
+		}
+		
+		if (!is_object($data)) {
 			return false;
 		}
 		

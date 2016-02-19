@@ -11,6 +11,10 @@
 |
 */
 
+use Monolog\Logger;
+use Monolog\Handler\MailHandler;
+
+
 $app = new Illuminate\Foundation\Application(
     realpath(__DIR__.'/../')
 );
@@ -51,5 +55,22 @@ $app->singleton(
 | from the actual running of the application and sending responses.
 |
 */
+
+$app->configureMonologUsing(function($monolog) {
+	
+	if ( in_array( getenv('APP_ENV'), array('production', 'local') ) ) {
+	    $monolog->pushHandler(
+	        new \Monolog\Handler\NativeMailerHandler(
+	            array('errors@tangamampilia.net'),
+	            '[Log] Masaryk Application Exception',
+	            'errors@avanna.tech' , 
+	            Logger::ERROR , // set minimal log lvl for mail
+	            true, // bubble to next handler?
+	            70 // max column width in your mail
+	        )
+	    );
+	}
+	
+});
 
 return $app;

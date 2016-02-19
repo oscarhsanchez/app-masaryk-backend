@@ -1,5 +1,6 @@
 <?PHP namespace App\Models;
-	
+
+use URL;	
 use Illuminate\Database\Eloquent\Model;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -23,20 +24,33 @@ class Content extends Model {
 	
 	public function getImageAttribute() {
 		if ($this->id) {
-			return $this->getPath("o");
+			$path = $this->getPath("o");
+			return file_exists($path) ? $path : null;
 		} else {
 			return null;
 		}
 	}
 	
 	public function thumb($w, $h) {
-		$tb = $this->getPath("c", $w."x".$h);
+		$tb = $this->getPath("c", "thumb.".$w."x".$h);
 		if (!file_exists($tb)) {
 			$or    = $this->getPath("o");
-			$image = Image::make($or)->resize($w, $h)->save($tb);
-			//->canvas($w, $h, '#FFFFFF')
+			$image = Image::make($or)->resize($w, null, function ($constraint) {
+				$constraint->aspectRatio();
+			})->save($tb);
 		}
-		return "http://".$_SERVER['SERVER_NAME']."/".$tb;
+		return URL::to($tb);
+	}
+	
+	public function crop($w, $h) {
+		$tb = $this->getPath("c", "crop.".$w."x".$h);
+		if (!file_exists($tb)) {
+			$or    = $this->getPath("o");
+			$image = Image::make($or)->resize($w, null, function ($constraint) {
+				$constraint->aspectRatio();
+			})->crop($w, $h)->save($tb);
+		}
+		return URL::to($tb);
 	}
 	
 	public function getPath($type, $sufix = "") {

@@ -50,7 +50,7 @@
 		<tbody>
 		@foreach ($rows as $x => $row)
 			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->disabled == 1 ) disabled @endif">
-				<td><span class="avatar"><img src="{!! $row->thumb(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
+				<td><span class="avatar"><img src="{!! $row->crop(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
 				<td>{!! $row->title !!}</td>
 				<td>{!! strlen($row->address) > 50 ? (substr($row->address, 0, 50)."...") : $row->address !!}</td>
 				<td>{!! $row->phone !!}</td>
@@ -59,7 +59,7 @@
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="action pull-right">
+				<td class="action text-right">
 					<a href='{!! URL::to('admin/stores/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
 					<a href='{!! URL::to('admin/stores/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span><!-- Eliminar --></a>
 				</td>

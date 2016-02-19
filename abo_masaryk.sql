@@ -7,7 +7,7 @@
 #
 # Host: abostudio.mx (MySQL 5.5.45-cll-lve)
 # Database: abo_masaryk
-# Generation Time: 2016-02-04 22:43:32 +0000
+# Generation Time: 2016-02-19 02:55:30 +0000
 # ************************************************************
 
 
@@ -47,7 +47,10 @@ VALUES
 	(4,5,'l4I2XaYvwCVWCmruQieEtxjnrXKVZJoQ',1,'2016-02-01 21:09:46','2016-02-01 21:09:46','2016-02-01 21:09:46'),
 	(5,6,'XX6H01a3ljFQFAUU0QctWhW2CF6U5xHX',1,'2016-02-01 21:10:20','2016-02-01 21:10:20','2016-02-01 21:10:20'),
 	(6,7,'UFdsQUyz1pFiTQXYScowNOxMDXveuAuw',1,'2016-02-03 06:38:14','2016-02-03 06:38:14','2016-02-03 06:38:14'),
-	(7,8,'eFzzcl8ppdKB5XElT0YUESz1eYbOPlVP',1,'2016-02-03 06:46:12','2016-02-03 06:46:12','2016-02-03 06:46:12');
+	(7,8,'eFzzcl8ppdKB5XElT0YUESz1eYbOPlVP',1,'2016-02-03 06:46:12','2016-02-03 06:46:12','2016-02-03 06:46:12'),
+	(8,9,'uwDWkpcCbbJ3aJvjROMWI8gTTVA6nAEc',1,'2016-02-06 05:22:34','2016-02-06 05:22:34','2016-02-06 05:22:34'),
+	(9,10,'lz3IAtbOz0kBKJM3Ww9yldONodgfgrJx',1,'2016-02-06 07:09:04','2016-02-06 07:09:04','2016-02-06 07:09:04'),
+	(10,11,'rh4bRmGR1mcUac9FNEFKab78yiGa2QZH',1,'2016-02-06 07:18:44','2016-02-06 07:18:44','2016-02-06 07:18:44');
 
 /*!40000 ALTER TABLE `activations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -80,10 +83,10 @@ LOCK TABLES `activities` WRITE;
 
 INSERT INTO `activities` (`id`, `title`, `description`, `address`, `date_from`, `date_to`, `lat`, `lng`, `type_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-	(1,'Carrera Masaryk','Vive la emoción con la primera carrera deportiva en Av. Masaryk.','Masaryk #451','2016-01-31 00:00:00','2016-01-31 00:00:00',19.43015530,-99.19506210,2,1,'2016-02-01 04:57:00','2016-02-04 05:47:07',NULL),
-	(2,'Clases de Yoga','¡Continúan las actividades en Av. Masaryk! Realizan clase masiva de Yoga!','Masaryk #54','2016-01-31 00:00:00','2016-01-31 00:00:00',19.43161226,-99.19712204,1,1,'2016-02-01 04:57:34','2016-02-04 05:44:01',NULL),
-	(3,'México y Reino Unido celebran con subasta','México y Reino Unido celebran con una subasta con grandes premios.','Masaryk #201','2016-02-03 00:00:00','2016-02-03 00:00:00',19.43193602,-99.19935363,1,1,'2016-02-04 05:46:59','2016-02-04 05:46:59',NULL),
-	(4,'Fashion Night','Celebra una noche con música DJ.','Masaryk #101','2016-02-03 00:00:00','2016-02-03 00:00:00',19.43015530,-99.19506210,2,1,'2016-02-04 05:48:27','2016-02-04 05:48:27',NULL);
+	(1,'Carrera Masaryk','Vive la emoción con la primera carrera deportiva en Av. Masaryk.','Masaryk #451','2016-01-31 16:30:00','2016-01-31 17:30:00',19.43015530,-99.19506210,2,1,'2016-02-01 04:57:00','2016-02-04 05:47:07',NULL),
+	(2,'Clases de Yoga','¡Continúan las actividades en Av. Masaryk! Realizan clase masiva de Yoga!','Masaryk #54','2016-01-31 14:00:00','2016-01-31 14:45:00',19.43161226,-99.19712204,1,1,'2016-02-01 04:57:34','2016-02-04 05:44:01',NULL),
+	(3,'México y Reino Unido celebran con subasta','México y Reino Unido celebran con una subasta con grandes premios.','Masaryk #201','2016-02-03 09:15:00','2016-02-03 10:00:00',19.43193602,-99.19935363,1,1,'2016-02-04 05:46:59','2016-02-04 05:46:59',NULL),
+	(4,'Fashion Night','Celebra una noche con música DJ.','Masaryk #101','2016-02-03 13:00:00','2016-02-03 15:00:00',19.43015530,-99.19506210,2,1,'2016-02-04 05:48:27','2016-02-04 05:48:27',NULL);
 
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -231,7 +234,20 @@ VALUES
 	(47,8,'3RzHXsMLsWtJ4gZe8V46RipfADExqdG3','2016-02-03 06:46:12','2016-02-03 06:46:12'),
 	(48,1,'6UDpvkoBUxXMCUI3Q9DPpVMh9ttNJvHZ','2016-02-03 06:50:31','2016-02-03 06:50:31'),
 	(49,1,'sK5QGOQv38J2RATfMsGnyUaDJhBwJIry','2016-02-04 00:35:47','2016-02-04 00:35:47'),
-	(50,1,'qYalSXo2b6SgUEPelFKs2bTS432MZ8I0','2016-02-04 00:48:04','2016-02-04 00:48:04');
+	(50,1,'qYalSXo2b6SgUEPelFKs2bTS432MZ8I0','2016-02-04 00:48:04','2016-02-04 00:48:04'),
+	(52,1,'6O4YR3dlCMG2f8rVXZlCYODstXywCiST','2016-02-04 22:52:19','2016-02-04 22:52:19'),
+	(53,1,'DOzWgGWDp5DRwS8FzlMsmEcXbyPvYslt','2016-02-05 06:47:45','2016-02-05 06:47:45'),
+	(54,9,'i5Ar12Qh0MQLQ7k5oO0cgj7VvohwyeNo','2016-02-06 05:22:34','2016-02-06 05:22:34'),
+	(55,7,'wOT21dNBlqrwOHEQvTUkRkGl9dylvnMZ','2016-02-06 06:31:07','2016-02-06 06:31:07'),
+	(56,7,'40tiD2nnpqw5bNMW1wyLB2Td8inXRIQc','2016-02-06 06:34:17','2016-02-06 06:34:17'),
+	(57,10,'FgbOOOEMDIh2GV6mUhFZJR1gxIeB3T7G','2016-02-06 07:09:04','2016-02-06 07:09:04'),
+	(58,11,'nErV8X21WZ04l63zXQBYewoVDzJ15Dgz','2016-02-06 07:18:44','2016-02-06 07:18:44'),
+	(59,1,'kqAn3TA66WZ0jNsp5RW9Sunm6yFocqEL','2016-02-17 01:27:29','2016-02-17 01:27:29'),
+	(60,1,'4id4XtcdB89OJw21TYm7SNU2ZVCx2tDQ','2016-02-18 05:31:39','2016-02-18 05:31:39'),
+	(61,1,'xiCrVifNREJZODkAI2JgRqlvX4ITz5lL','2016-02-18 07:47:58','2016-02-18 07:47:58'),
+	(62,1,'FzepNDoINboZA4icVTqd0bF8xsYm58Ta','2016-02-19 02:07:47','2016-02-19 02:07:47'),
+	(63,1,'DUdL5XkJZM4PKi6v4iCyAWgoNGaubfnR','2016-02-19 02:16:42','2016-02-19 02:16:42'),
+	(64,1,'rIoFmh4xqwlRzBldxgPVVQMWBSTnsJFK','2016-02-19 02:45:28','2016-02-19 02:45:28');
 
 /*!40000 ALTER TABLE `persistences` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -504,7 +520,19 @@ VALUES
 	(51,NULL,'global',NULL,'2016-02-03 02:22:23','2016-02-03 02:22:23'),
 	(52,NULL,'ip','187.190.155.170','2016-02-03 02:22:23','2016-02-03 02:22:23'),
 	(53,NULL,'global',NULL,'2016-02-03 02:22:39','2016-02-03 02:22:39'),
-	(54,NULL,'ip','187.190.155.170','2016-02-03 02:22:39','2016-02-03 02:22:39');
+	(54,NULL,'ip','187.190.155.170','2016-02-03 02:22:39','2016-02-03 02:22:39'),
+	(55,NULL,'global',NULL,'2016-02-04 22:50:10','2016-02-04 22:50:10'),
+	(56,NULL,'ip','189.191.60.194','2016-02-04 22:50:10','2016-02-04 22:50:10'),
+	(57,NULL,'global',NULL,'2016-02-18 05:30:53','2016-02-18 05:30:53'),
+	(58,NULL,'global',NULL,'2016-02-18 05:30:53','2016-02-18 05:30:53'),
+	(59,NULL,'ip','201.153.252.173','2016-02-18 05:30:53','2016-02-18 05:30:53'),
+	(60,NULL,'ip','201.153.252.173','2016-02-18 05:30:53','2016-02-18 05:30:53'),
+	(61,NULL,'global',NULL,'2016-02-18 07:37:40','2016-02-18 07:37:40'),
+	(62,NULL,'ip','201.153.252.173','2016-02-18 07:37:40','2016-02-18 07:37:40'),
+	(63,NULL,'global',NULL,'2016-02-18 07:37:43','2016-02-18 07:37:43'),
+	(64,NULL,'ip','201.153.252.173','2016-02-18 07:37:43','2016-02-18 07:37:43'),
+	(65,NULL,'global',NULL,'2016-02-18 07:37:50','2016-02-18 07:37:50'),
+	(66,NULL,'ip','201.153.252.173','2016-02-18 07:37:50','2016-02-18 07:37:50');
 
 /*!40000 ALTER TABLE `throttle` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -539,17 +567,32 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `facebook_id`, `email`, `password`, `first_name`, `last_name`, `city`, `birthday`, `remember_token`, `facebook_token`, `created_at`, `updated_at`, `deleted_at`, `last_login`)
 VALUES
-	(1,'','daniel.fer@avanna.com.mx','$2y$10$DVtfLJukAu5z3qCDpY5uwe/9WcBjH6/Xk5ISkUQLJUf2z4RW4hq.m','Daniel','Fernandez','mexico','0000-00-00','$2y$10$Q4XwT1cHHOVZRe.pa5Z0NOIroMxBj7q0UOjFgufPvkVAc88XMHPKG','','2016-02-03 17:48:04','2016-02-04 00:48:04',NULL,'2016-02-04 00:48:04'),
-	(2,'','john.doe@example.com','$2y$10$QI2pcHK2vvSkVdFYLOEjGu1GRMuz.oYZ5JeQWnBbD.6hZQfVoRP6S','John','Doe','Mexico','2014-03-10','$2y$10$OleO8N6IURAGF58pI8jQi.MIMTrr9mGb6/zkPJ73RzgNffRhBPwra','','2016-02-01 18:52:39','2016-02-01 22:41:06',NULL,'0000-00-00 00:00:00'),
-	(3,'','juanperez@hotmail.com','$2y$10$hI7DSjqOPxEJLrMsVzFmg.5NfN6Ss0mc8FRvHw0UassmltnTLPpNK','Juan','Peréz','Mexico','0000-00-00','$2y$10$ZIwuLtjkVqT5hDlhyMuthenZjBDVUAZAsdSxyHKoHC/qYvNlc/VeW','','2016-02-01 18:52:44','2016-02-01 20:59:13',NULL,'0000-00-00 00:00:00'),
+	(1,'100000119631602','daniel.fer@avanna.com.mx','$2y$10$DVtfLJukAu5z3qCDpY5uwe/9WcBjH6/Xk5ISkUQLJUf2z4RW4hq.m','Daniel','Fernandez','México','0000-00-00','$2y$10$Q4XwT1cHHOVZRe.pa5Z0NOIroMxBj7q0UOjFgufPvkVAc88XMHPKG','CAAO2AcRaUI0BAELqSyT8gZBcWyOWznD5mtPCTE3EUatDfvPpclhbU6s3f7EGCZB1thi0P4Nqj76Lr44VPFyhLwHK62e9dlxp1kkYmaSwFcus852NqCxWfZCURZBk8hBZCSVmlkwXCBf5kdORpfDS1HUP6FF1d6JjbQW78VZBvhZAplDxtUjH6UCnZBnDLPmbZCz4lliitkhBvVWTkUw29sJ7ZATBOMJzuHB9fcT6anWYpnqgZDZD','2016-02-18 19:45:28','2016-02-19 02:45:28',NULL,'2016-02-19 02:45:28'),
+	(2,'','john.doe@example.com','$2y$10$QI2pcHK2vvSkVdFYLOEjGu1GRMuz.oYZ5JeQWnBbD.6hZQfVoRP6S','John','Doe','México','2014-03-10','$2y$10$OleO8N6IURAGF58pI8jQi.MIMTrr9mGb6/zkPJ73RzgNffRhBPwra','','2016-02-18 17:26:05','2016-02-01 22:41:06',NULL,'0000-00-00 00:00:00'),
+	(3,'','juanperez@hotmail.com','$2y$10$hI7DSjqOPxEJLrMsVzFmg.5NfN6Ss0mc8FRvHw0UassmltnTLPpNK','Juan','Peréz','México','0000-00-00','$2y$10$ZIwuLtjkVqT5hDlhyMuthenZjBDVUAZAsdSxyHKoHC/qYvNlc/VeW','','2016-02-18 17:26:06','2016-02-01 20:59:13',NULL,'0000-00-00 00:00:00'),
 	(4,'','lamaria@gmail.com','$2y$10$2hCE.p8U/gcsQZmK2dstzuwV6t5rOcEn3V0WwUzyEkUCiskVug3NK','María','Saenz','Sonora','0000-00-00','$2y$10$lTwGUay8IhKOdSXHJbLFBeU.6R.AN6MHhlbqOWclK4TqtZzt4XJ1.','','2016-02-01 18:52:49','2016-02-01 21:09:40',NULL,'0000-00-00 00:00:00'),
 	(5,'','cmurillo@outlook.com','$2y$10$POyNQ8BQN.jgNLm4Q5A2quehSWB19F33kPSV7LX82vtZ3yttEx6mC','Carlos','Murillo','Villahermosa','0000-00-00','$2y$10$3kaifWKXAs4C.16Q0yp7AeAexaOph6ZdSRNhrg.ry2CfUsymSGfKa','','2016-02-01 18:52:52','2016-02-01 21:09:46',NULL,'0000-00-00 00:00:00'),
-	(6,'','javi@yahoo.com.mx','$2y$10$MObvi6o7tYsXx0NDPJ46teGO8fVBa43dHb3I8VqWF7Y3PIfXbTpFa','Javier','Ortega','Mexico','0000-00-00','$2y$10$fY9yn.6uicMYlRDt8uRe.eAh0dCfVV1r6SQ6DpWMLZtJp2hL8g5Dq','','2016-02-01 18:52:57','2016-02-01 21:10:20',NULL,'0000-00-00 00:00:00'),
-	(7,'1278539442160031','tangamampilia1@gmail.com','$2y$10$4InxGwGrMeAXPOTSE5MF4e6tj6Gru12IJO/k.mXog/WZzKRQG/DYO','Daniel','Fernández','Villahermosa','1980-03-11','$2y$10$tFoQ0dbj.y1SPPNmidmBkO2e.t3q7i5t7T26VqG6nUabDXdXIx7Te','CAAO2AcRaUI0BAEiUojWvooy9k1raDNKDuflqCEZCn7o224PPbo1RPsQK5eBi0QPS3CyqZABGbheaJvLdhQKWM3AkJIOJfUhCgLm0m9GIoSUWULyGYJhTT71dfctpE3IdzPZCW4JIVYIUDJjNKuPaqj0pm5Q6VfnsdLS1UqAcKH1QWwY36pZBnxQoJsw9ZCXVTQm0Ekzet03rPDZBpRZCHsKuE6h3qwjZBOoodX3YGlcvEaGPCv1RJ53yG7iglqwf9xARffD2T9KTygZDZD','2016-02-02 23:38:14','2016-02-03 06:38:14',NULL,'2016-02-03 06:38:14'),
-	(8,'','test@test.com','$2y$10$mv8wD80Dxlg/X.a8a4sb7epp2i6ZaVR9Y.rv1botPUli0.zrKIhjO','Daniel','Fernande','M','0000-00-00','$2y$10$S0sWHodRxdauhlZIVYoLiOnsqxaCC/2MmFdJGdB47f/OrcV2pyq..','','2016-02-02 23:46:12','2016-02-03 06:46:12',NULL,'2016-02-03 06:46:12');
+	(6,'','javi@yahoo.com.mx','$2y$10$MObvi6o7tYsXx0NDPJ46teGO8fVBa43dHb3I8VqWF7Y3PIfXbTpFa','Javier','Ortega','Mexico','0000-00-00','$2y$10$fY9yn.6uicMYlRDt8uRe.eAh0dCfVV1r6SQ6DpWMLZtJp2hL8g5Dq','','2016-02-01 18:52:57','2016-02-01 21:10:20',NULL,'0000-00-00 00:00:00');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+# Dump of table users_activities
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users_activities`;
+
+CREATE TABLE `users_activities` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `activity_id` int(11) DEFAULT NULL,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL,
+  `deleted_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
 
 
 
