@@ -37,6 +37,13 @@
 </div>
 
 <div class="form-group">
+	{!! Form::label('description', 'Descripción', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		{!! Form::text('description', Input::old('description', $data->description), array('class'=>'form-control')) !!}
+	</div>
+</div>
+
+<div class="form-group">
 	{!! Form::label('phone', 'Teléfono', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
 		{!! Form::text('phone', Input::old('phone', $data->phone), array('class'=>'form-control')) !!}

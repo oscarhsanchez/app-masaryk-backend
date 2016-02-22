@@ -86,6 +86,7 @@ class StoresController extends Controller {
 			$data = new Store();
 			$data->title  	= Input::get('title');
 			$data->address  = Input::get('address');
+			$data->description = Input::get('description');
 			$data->phone  	= Input::get('phone');
 			$data->lat  	= Input::get('latitude');
 			$data->lng  	= Input::get('longitude');
@@ -145,6 +146,7 @@ class StoresController extends Controller {
 
 			$data->title  	= Input::get('title');
 			$data->address  = Input::get('address');
+			$data->description = Input::get('description');
 			$data->phone  	= Input::get('phone');
 			$data->lat  	= Input::get('latitude');
 			$data->lng  	= Input::get('longitude');

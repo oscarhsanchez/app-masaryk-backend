@@ -442,7 +442,8 @@ class ApiController extends Controller {
 	   	$items = Store::leftJoin("stores_type", "stores_type.id", "=", "stores.type_id")
 	   				  ->where("active", "=", 1)
 	   				  ->get(array("stores.id", "stores.title", "stores.address", "stores.phone", 
-	   				  			  "stores.lat", "stores.lng", "stores_type.name AS type"));
+	   				  			  "stores.lat", "stores.lng", "stores_type.name AS type",
+	   				  			  "stores.description"));
 	   					
 	   	foreach ($items as $item) {		   	
 		   	
@@ -478,13 +479,31 @@ class ApiController extends Controller {
 	   				  			  "activities.lat", "activities.lng", "activities_type.name AS type", "activities.date_from", "activities.date_to"));
 	   					
 	   	foreach ($items as $item) {		   	
-		   	$item->thumb = $item->thumb(100, 600);
+		   	$thumb = $item->crop(100, 100);
+		   	$full  = $item->crop(800, 400);
+		   	$item->thumb  = array("src"=>$thumb, "width"=>100, "height"=>100);
+		   	$item->full   = array("src"=>$full,  "width"=>800, "height"=>400);
 	   	}
 		
 		return Response::json(array("success"=>true, "service"=>"activities", "data"=>$items));
 		
     }
+        
     
+    
+    /**
+     * getLogout function.
+     * 
+     * @access public
+     * @return void
+     */
+     
+    public function getLogout() {
+		 Sentinel::logout();
+		 return Response::json(array("success"=>true, "service"=>"logout"));
+	}
+	
+	
     
     
 	/**************************
