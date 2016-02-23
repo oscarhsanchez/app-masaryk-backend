@@ -18,6 +18,7 @@ class User extends CartalystUser {
         'city',
         'birthday',
         'facebook_id',
+        'phone',
     ];
     
     public function setImageAttribute($image) {

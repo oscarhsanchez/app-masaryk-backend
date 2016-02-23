@@ -143,7 +143,7 @@ class ApiController extends Controller {
 		    
 		    $user = User::where("facebook_id", "=", $data->id)->first();
 		    		    
-		    if (!$user) {
+		    if ($user) {
 			    
 			    $user = Sentinel::findById($user->id);
 				Sentinel::loginAndRemember($user);
@@ -277,7 +277,7 @@ class ApiController extends Controller {
      */
     public function anyRenew() {
 	    
-	    $token = Input::get("remember_token", "");
+	    $token = Input::get("renew_token", "");
 	    $email = Input::get("email", "");
 	    
 	    $user  = User::where("remember_token", "=", trim($token))
@@ -317,11 +317,7 @@ class ApiController extends Controller {
 		} else {
 			$user->avatar = $user->crop(300, 300);
 		}
-		
-		
-		
-		//$user->avatar = array();
-		
+				
 		unset($user->password);
 		unset($user->remember_token);
 		unset($user->facebook_token);
@@ -373,6 +369,7 @@ class ApiController extends Controller {
 				"last_name"  	 => Input::get('last_name'),
 				"birthday"  	 => Input::get('birthday', ''),
 				"city"  		 => Input::get('city', 'Mexico'),
+				"phone"  		 => Input::get('phone', ''),
 			];	
 			
 			if ($password_validate) {
