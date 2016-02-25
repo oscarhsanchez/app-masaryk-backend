@@ -21,6 +21,14 @@ class User extends CartalystUser {
         'phone',
     ];
     
+    public function notifications() {
+        return $this->hasMany('App\Models\UserNotification');
+    }
+    
+    public function activities() {
+        return $this->hasMany('App\Models\UserNotification');
+    }
+    
     public function setImageAttribute($image) {
 	    if ($this->id) {
 			Image::make($image)->save($this->filepath."/o/".$this->id.".png");

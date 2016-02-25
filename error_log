@@ -10,3 +10,7 @@
 [19-Feb-2016 00:32:13 UTC] PHP Fatal error:  Class 'App\Http\Controllers\URL' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 315
 [19-Feb-2016 01:21:57 UTC] PHP Fatal error:  Class 'App\Models\URL' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Models/User.php on line 46
 [19-Feb-2016 02:15:28 UTC] PHP Parse error:  syntax error, unexpected ''last_nam' (T_ENCAPSED_AND_WHITESPACE) in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 373
+[25-Feb-2016 01:13:44 UTC] PHP Parse error:  syntax error, unexpected '$notification' (T_VARIABLE) in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 571
+[25-Feb-2016 01:14:18 UTC] PHP Parse error:  syntax error, unexpected '$notification' (T_VARIABLE) in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 571
+[25-Feb-2016 02:50:52 UTC] PHP Fatal error:  Class 'App\Http\Controllers\UserNotification' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 565
+[25-Feb-2016 02:50:52 UTC] PHP Fatal error:  Class 'App\Http\Controllers\UserNotification' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 565

@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Response, DB, Mail, URL, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity;
+use Input, Validator, View, Response, DB, Mail, URL, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity, App\Models\UserNotification;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Reminder;
 
@@ -464,16 +464,17 @@ class ApiController extends Controller {
      * @return void
      */
     public function getActivities() {
-	    
-	    
+	    	    
 	    if (!$user = $this->_validate()) {
 			return Response::json(array("success"=>false, "service"=>"activities", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		}
 
 	   	$items = Activity::leftJoin("activities_type", "activities_type.id", "=", "activities.type_id")
+	   				  ->leftJoin("users_activities", "activities.id", "=", "users_activities.activity_id")
 	   				  ->where("active", "=", 1)
 	   				  ->get(array("activities.id", "activities.title", "activities.address", "activities.description", 
-	   				  			  "activities.lat", "activities.lng", "activities_type.name AS type", "activities.date_from", "activities.date_to"));
+	   				  			  "activities.lat", "activities.lng", "activities.type_id", "activities_type.name AS type", "activities.date_from", 
+	   				  			  "activities.date_to", DB::raw("IF(`users_activities`.`user_id`=1,1,0) AS scheduled")));
 	   					
 	   	foreach ($items as $item) {		   	
 		   	$thumb = $item->crop(100, 100);
@@ -485,7 +486,100 @@ class ApiController extends Controller {
 		return Response::json(array("success"=>true, "service"=>"activities", "data"=>$items));
 		
     }
+    
+    
+    
+    /**
+     * activity register function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function anyActivityRegister() {
+	    	    
+	    if (!$user = $this->_validate()) {
+			return Response::json(array("success"=>false, "service"=>"activity-register", "error_code"=>403, "error_message"=>"Sesión no válida."));
+		}
+		
+		$activity = Input::get("activity_id", 0);
+		$activity = Activity::find($activity);
+		
+		if (!$activity) {
+			return Response::json(array("success"=>false, "service"=>"activity-register", "error_code"=>402, "error_message"=>"Actividad no encontrada."));
+		}
+		
+		$exists = DB::table("users_activities")->where("activity_id", "=", $activity->id)->where("user_id", "=", $user->id)->first();
+		if (!$exists) {
+			DB::table("users_activities")->insert( array('user_id' => 1, 'activity_id' => $activity->id) );
+		}
+	   	
+		
+		return Response::json(array("success"=>true, "service"=>"activity-add", "data"=>$this->getActivities()));
+		
+    }
+          
+    
+    
+    /**
+     * activity unregister function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function anyActivityUnregister() {
+	    	    
+	    if (!$user = $this->_validate()) {
+			return Response::json(array("success"=>false, "service"=>"activity-unregister", "error_code"=>403, "error_message"=>"Sesión no válida."));
+		}
+		
+		$activity = Input::get("activity_id", 0);
+		$activity = Activity::find($activity);
+		
+		if (!$activity) {
+			return Response::json(array("success"=>false, "service"=>"activity-unregister", "error_code"=>402, "error_message"=>"Actividad no encontrada."));
+		}
+		
+		DB::table("users_activities")->where("activity_id", "=", $activity->id)->where("user_id", "=", $user->id)->delete();
+		
+		return Response::json(array("success"=>true, "service"=>"activity-add", "data"=>$this->getActivities()));
+		
+    }  
+    
         
+    
+    
+    /**
+     * activity register function.
+     * 
+     * @access public
+     * @return void
+     */
+    public function anyNotification() {
+	    	    
+	    if (!$user = $this->_validate()) {
+			return Response::json(array("success"=>false, "service"=>"notification", "error_code"=>403, "error_message"=>"Sesión no válida."));
+		}
+		
+		$token  = Input::get("token", "");
+		$device = Input::get("device", "");
+		$notification = UserNotification::where("device", "=", trim($device))->where("token", "=", trim($token))->first();
+				
+		if (!$notification) {
+			$notification = new UserNotification();
+			$notification->user_id = $user->id;
+			$notification->device  = trim($device);
+			$notification->token   = trim($token);
+			$notification->save();
+		} else {
+			$notification->user_id = $user->id;
+			$notification->save();
+		}
+	   	
+		return Response::json(array("success"=>true, "service"=>"notification"));
+		
+    }
+    
+    
     
     
     /**
