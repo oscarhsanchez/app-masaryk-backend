@@ -1,13 +1,13 @@
 # ************************************************************
 # Sequel Pro SQL dump
-# Version 4499
+# Version 4529
 #
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
 # Host: abostudio.mx (MySQL 5.5.45-cll-lve)
 # Database: abo_masaryk
-# Generation Time: 2016-02-19 02:55:30 +0000
+# Generation Time: 2016-02-29 18:55:36 +0000
 # ************************************************************
 
 
@@ -50,7 +50,11 @@ VALUES
 	(7,8,'eFzzcl8ppdKB5XElT0YUESz1eYbOPlVP',1,'2016-02-03 06:46:12','2016-02-03 06:46:12','2016-02-03 06:46:12'),
 	(8,9,'uwDWkpcCbbJ3aJvjROMWI8gTTVA6nAEc',1,'2016-02-06 05:22:34','2016-02-06 05:22:34','2016-02-06 05:22:34'),
 	(9,10,'lz3IAtbOz0kBKJM3Ww9yldONodgfgrJx',1,'2016-02-06 07:09:04','2016-02-06 07:09:04','2016-02-06 07:09:04'),
-	(10,11,'rh4bRmGR1mcUac9FNEFKab78yiGa2QZH',1,'2016-02-06 07:18:44','2016-02-06 07:18:44','2016-02-06 07:18:44');
+	(10,11,'rh4bRmGR1mcUac9FNEFKab78yiGa2QZH',1,'2016-02-06 07:18:44','2016-02-06 07:18:44','2016-02-06 07:18:44'),
+	(11,12,'HXzymH3TSPiPq91tbkcLTq8VZx8ch32K',1,'2016-02-19 03:26:56','2016-02-19 03:26:56','2016-02-19 03:26:56'),
+	(12,13,'IdNYNw7h3UKOMKtJ9IxWFSh92IzYgchu',1,'2016-02-23 22:36:15','2016-02-23 22:36:15','2016-02-23 22:36:15'),
+	(13,14,'hT7oqqTTn7ekOyHJ2ChvphAtsK1OFOyh',1,'2016-02-24 18:57:50','2016-02-24 18:57:50','2016-02-24 18:57:50'),
+	(14,15,'lL5zDM128oVvoXo22OGmYc36SGOw1TRQ',1,'2016-02-24 18:58:40','2016-02-24 18:58:40','2016-02-24 18:58:40');
 
 /*!40000 ALTER TABLE `activations` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -247,7 +251,31 @@ VALUES
 	(61,1,'xiCrVifNREJZODkAI2JgRqlvX4ITz5lL','2016-02-18 07:47:58','2016-02-18 07:47:58'),
 	(62,1,'FzepNDoINboZA4icVTqd0bF8xsYm58Ta','2016-02-19 02:07:47','2016-02-19 02:07:47'),
 	(63,1,'DUdL5XkJZM4PKi6v4iCyAWgoNGaubfnR','2016-02-19 02:16:42','2016-02-19 02:16:42'),
-	(64,1,'rIoFmh4xqwlRzBldxgPVVQMWBSTnsJFK','2016-02-19 02:45:28','2016-02-19 02:45:28');
+	(64,1,'rIoFmh4xqwlRzBldxgPVVQMWBSTnsJFK','2016-02-19 02:45:28','2016-02-19 02:45:28'),
+	(65,12,'EyfvOFtBJvVKhoecd97OmSXc1jioAnTN','2016-02-19 03:26:56','2016-02-19 03:26:56'),
+	(66,12,'rsRlKfjNpukp3qrba3WELIuhCihXy6Qj','2016-02-19 16:15:21','2016-02-19 16:15:21'),
+	(70,12,'8nyKZCzndrfkaXhhyfLPSCJMLnq3ASfY','2016-02-22 21:39:29','2016-02-22 21:39:29'),
+	(75,1,'oHWUBChdOJfwCkuatcHRpFu3TmRbJ5mD','2016-02-23 22:13:43','2016-02-23 22:13:43'),
+	(76,13,'r52jqeNRS6ZGLfDsm5QPPIBwX9P4klcZ','2016-02-23 22:36:15','2016-02-23 22:36:15'),
+	(78,15,'WRS2N8Pshx2Osvx9oMwOjWx0zNH3wYFq','2016-02-24 18:58:40','2016-02-24 18:58:40'),
+	(81,1,'oEvfYF3Ay1uRZVkd3wWrAg0yKeDv42hx','2016-02-25 03:54:49','2016-02-25 03:54:49'),
+	(82,12,'axmZIe5L5AJsBRGYujliGcPLXtmigfQd','2016-02-25 04:37:08','2016-02-25 04:37:08'),
+	(83,15,'YR8Cr0YtG47SJGarjy3fbFWnmQkb6qlH','2016-02-25 06:35:53','2016-02-25 06:35:53'),
+	(84,15,'YZWe29mEczjWZ6YJEVs2mmmAhUFMBnou','2016-02-25 10:44:00','2016-02-25 10:44:00'),
+	(85,15,'PyYSYgQJDfSuOFOWYUZSouGG5pF9ZIzw','2016-02-25 14:08:41','2016-02-25 14:08:41'),
+	(86,15,'K3o3QxJ5PGcuPKXOx9YkgMYwv1bZoE6w','2016-02-25 22:06:11','2016-02-25 22:06:11'),
+	(87,15,'KXPNQSN2uXb2pFiNOSAbEHdKT7rTyqwd','2016-02-26 06:46:30','2016-02-26 06:46:30'),
+	(88,15,'Rkhfk6LEc38BpT2Or9W0ONIzlUBQ6rmG','2016-02-26 15:45:27','2016-02-26 15:45:27'),
+	(89,15,'th8YiupLE5MtOV9vREtyPKNS0XRozYHS','2016-02-26 20:39:04','2016-02-26 20:39:04'),
+	(90,15,'N3fjGrS4d2qZixp7Ecb1nfXeN3TK8yNt','2016-02-27 08:02:33','2016-02-27 08:02:33'),
+	(91,15,'apJafTkmj2ZeOj4vjaBilppovklLkXh6','2016-02-27 09:45:20','2016-02-27 09:45:20'),
+	(92,15,'vHoRTNTIqH6dTI02ljszyMt3AKiF5gTz','2016-02-27 11:40:18','2016-02-27 11:40:18'),
+	(93,15,'esX7ci4zEgRUE9Nepx0xbqx5MReuBz9I','2016-02-27 15:19:18','2016-02-27 15:19:18'),
+	(94,15,'e10zApGJZv9wytmLodByHzKNJTcAz05H','2016-02-27 20:35:37','2016-02-27 20:35:37'),
+	(95,15,'2RJfYt24j3QnG50ppZe8SDXK5xV8Mr9c','2016-02-27 21:12:17','2016-02-27 21:12:17'),
+	(96,15,'9HUGQn2q66yKqlXn00Kt3BBR4QA7vUEE','2016-02-27 23:17:46','2016-02-27 23:17:46'),
+	(97,1,'NL3uh5tZrJmHHDDluMfQnzeYQU2SJUT3','2016-02-28 01:40:53','2016-02-28 01:40:53'),
+	(98,1,'pv6PWqOP9xlMdoqDsr30nLVTWiTT26ZX','2016-02-28 06:40:50','2016-02-28 06:40:50');
 
 /*!40000 ALTER TABLE `persistences` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -393,6 +421,7 @@ CREATE TABLE `stores` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(100) DEFAULT NULL,
   `address` text,
+  `description` text,
   `phone` varchar(100) DEFAULT NULL,
   `lat` decimal(10,8) DEFAULT NULL,
   `lng` decimal(11,8) DEFAULT NULL,
@@ -407,14 +436,14 @@ CREATE TABLE `stores` (
 LOCK TABLES `stores` WRITE;
 /*!40000 ALTER TABLE `stores` DISABLE KEYS */;
 
-INSERT INTO `stores` (`id`, `title`, `address`, `phone`, `lat`, `lng`, `type_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
+INSERT INTO `stores` (`id`, `title`, `address`, `description`, `phone`, `lat`, `lng`, `type_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-	(1,'Prada ','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','55555555',19.43015530,-99.19506210,2,1,'2016-01-31 07:30:03','2016-02-04 08:53:26',NULL),
-	(2,'Dolce Gabanna','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','55555555',19.43193602,-99.19677871,0,1,'2016-02-03 09:01:58','2016-02-03 09:01:58',NULL),
-	(3,'Mac Store','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','55555555',19.43145037,-99.18733734,2,1,'2016-02-03 09:04:57','2016-02-03 09:04:57',NULL),
-	(4,'Porche','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','55555555',19.43234073,-99.20192856,2,1,'2016-02-03 09:05:45','2016-02-03 09:05:45',NULL),
-	(5,'Nesspreso','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','55555555',19.43015530,-99.19506210,1,1,'2016-02-03 09:06:25','2016-02-03 09:06:25',NULL),
-	(6,'Channel','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','55555555',19.43145037,-99.19291633,2,1,'2016-02-03 09:06:54','2016-02-03 09:07:02',NULL);
+	(1,'Prada ','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','55555555',19.43015530,-99.19506210,2,1,'2016-01-31 07:30:03','2016-02-04 08:53:26',NULL),
+	(2,'Dolce Gabanna','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','55555555',19.43193602,-99.19677871,0,1,'2016-02-03 09:01:58','2016-02-03 09:01:58',NULL),
+	(3,'Mac Store','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','55555555',19.43145037,-99.18733734,2,1,'2016-02-03 09:04:57','2016-02-03 09:04:57',NULL),
+	(4,'Porche','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','55555555',19.43234073,-99.20192856,2,1,'2016-02-03 09:05:45','2016-02-03 09:05:45',NULL),
+	(5,'Nesspreso','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','55555555',19.43015530,-99.19506210,1,1,'2016-02-03 09:06:25','2016-02-03 09:06:25',NULL),
+	(6,'Channel','Flannel cliche taxidermy mustache consequat, pariatur lo-fi DIY sartorial green juice chia odio try-hard fanny pack.','Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.','55555555',19.43145037,-99.19291633,2,1,'2016-02-03 09:06:54','2016-02-03 09:07:02',NULL);
 
 /*!40000 ALTER TABLE `stores` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -532,7 +561,13 @@ VALUES
 	(63,NULL,'global',NULL,'2016-02-18 07:37:43','2016-02-18 07:37:43'),
 	(64,NULL,'ip','201.153.252.173','2016-02-18 07:37:43','2016-02-18 07:37:43'),
 	(65,NULL,'global',NULL,'2016-02-18 07:37:50','2016-02-18 07:37:50'),
-	(66,NULL,'ip','201.153.252.173','2016-02-18 07:37:50','2016-02-18 07:37:50');
+	(66,NULL,'ip','201.153.252.173','2016-02-18 07:37:50','2016-02-18 07:37:50'),
+	(67,NULL,'global',NULL,'2016-02-19 03:22:30','2016-02-19 03:22:30'),
+	(68,NULL,'ip','189.191.53.182','2016-02-19 03:22:30','2016-02-19 03:22:30'),
+	(69,NULL,'global',NULL,'2016-02-23 03:16:49','2016-02-23 03:16:49'),
+	(70,NULL,'ip','189.191.53.182','2016-02-23 03:16:49','2016-02-23 03:16:49'),
+	(71,NULL,'global',NULL,'2016-02-25 01:14:33','2016-02-25 01:14:33'),
+	(72,NULL,'ip','201.153.252.173','2016-02-25 01:14:33','2016-02-25 01:14:33');
 
 /*!40000 ALTER TABLE `throttle` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -552,6 +587,7 @@ CREATE TABLE `users` (
   `last_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `city` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `birthday` date DEFAULT NULL,
+  `phone` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `facebook_token` text COLLATE utf8_unicode_ci,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -565,14 +601,18 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `facebook_id`, `email`, `password`, `first_name`, `last_name`, `city`, `birthday`, `remember_token`, `facebook_token`, `created_at`, `updated_at`, `deleted_at`, `last_login`)
+INSERT INTO `users` (`id`, `facebook_id`, `email`, `password`, `first_name`, `last_name`, `city`, `birthday`, `phone`, `remember_token`, `facebook_token`, `created_at`, `updated_at`, `deleted_at`, `last_login`)
 VALUES
-	(1,'100000119631602','daniel.fer@avanna.com.mx','$2y$10$DVtfLJukAu5z3qCDpY5uwe/9WcBjH6/Xk5ISkUQLJUf2z4RW4hq.m','Daniel','Fernandez','México','0000-00-00','$2y$10$Q4XwT1cHHOVZRe.pa5Z0NOIroMxBj7q0UOjFgufPvkVAc88XMHPKG','CAAO2AcRaUI0BAELqSyT8gZBcWyOWznD5mtPCTE3EUatDfvPpclhbU6s3f7EGCZB1thi0P4Nqj76Lr44VPFyhLwHK62e9dlxp1kkYmaSwFcus852NqCxWfZCURZBk8hBZCSVmlkwXCBf5kdORpfDS1HUP6FF1d6JjbQW78VZBvhZAplDxtUjH6UCnZBnDLPmbZCz4lliitkhBvVWTkUw29sJ7ZATBOMJzuHB9fcT6anWYpnqgZDZD','2016-02-18 19:45:28','2016-02-19 02:45:28',NULL,'2016-02-19 02:45:28'),
-	(2,'','john.doe@example.com','$2y$10$QI2pcHK2vvSkVdFYLOEjGu1GRMuz.oYZ5JeQWnBbD.6hZQfVoRP6S','John','Doe','México','2014-03-10','$2y$10$OleO8N6IURAGF58pI8jQi.MIMTrr9mGb6/zkPJ73RzgNffRhBPwra','','2016-02-18 17:26:05','2016-02-01 22:41:06',NULL,'0000-00-00 00:00:00'),
-	(3,'','juanperez@hotmail.com','$2y$10$hI7DSjqOPxEJLrMsVzFmg.5NfN6Ss0mc8FRvHw0UassmltnTLPpNK','Juan','Peréz','México','0000-00-00','$2y$10$ZIwuLtjkVqT5hDlhyMuthenZjBDVUAZAsdSxyHKoHC/qYvNlc/VeW','','2016-02-18 17:26:06','2016-02-01 20:59:13',NULL,'0000-00-00 00:00:00'),
-	(4,'','lamaria@gmail.com','$2y$10$2hCE.p8U/gcsQZmK2dstzuwV6t5rOcEn3V0WwUzyEkUCiskVug3NK','María','Saenz','Sonora','0000-00-00','$2y$10$lTwGUay8IhKOdSXHJbLFBeU.6R.AN6MHhlbqOWclK4TqtZzt4XJ1.','','2016-02-01 18:52:49','2016-02-01 21:09:40',NULL,'0000-00-00 00:00:00'),
-	(5,'','cmurillo@outlook.com','$2y$10$POyNQ8BQN.jgNLm4Q5A2quehSWB19F33kPSV7LX82vtZ3yttEx6mC','Carlos','Murillo','Villahermosa','0000-00-00','$2y$10$3kaifWKXAs4C.16Q0yp7AeAexaOph6ZdSRNhrg.ry2CfUsymSGfKa','','2016-02-01 18:52:52','2016-02-01 21:09:46',NULL,'0000-00-00 00:00:00'),
-	(6,'','javi@yahoo.com.mx','$2y$10$MObvi6o7tYsXx0NDPJ46teGO8fVBa43dHb3I8VqWF7Y3PIfXbTpFa','Javier','Ortega','Mexico','0000-00-00','$2y$10$fY9yn.6uicMYlRDt8uRe.eAh0dCfVV1r6SQ6DpWMLZtJp2hL8g5Dq','','2016-02-01 18:52:57','2016-02-01 21:10:20',NULL,'0000-00-00 00:00:00');
+	(1,'100000119631602','daniel.fer@avanna.com.mx','$2y$10$DVtfLJukAu5z3qCDpY5uwe/9WcBjH6/Xk5ISkUQLJUf2z4RW4hq.m','Daniel','Fernández','México','0000-00-00','555555555','$2y$10$Q4XwT1cHHOVZRe.pa5Z0NOIroMxBj7q0UOjFgufPvkVAc88XMHPKG','CAAO2AcRaUI0BAELqSyT8gZBcWyOWznD5mtPCTE3EUatDfvPpclhbU6s3f7EGCZB1thi0P4Nqj76Lr44VPFyhLwHK62e9dlxp1kkYmaSwFcus852NqCxWfZCURZBk8hBZCSVmlkwXCBf5kdORpfDS1HUP6FF1d6JjbQW78VZBvhZAplDxtUjH6UCnZBnDLPmbZCz4lliitkhBvVWTkUw29sJ7ZATBOMJzuHB9fcT6anWYpnqgZDZD','2016-02-27 23:40:50','2016-02-28 06:40:50',NULL,'2016-02-28 06:40:50'),
+	(2,'','john.doe@example.com','$2y$10$QI2pcHK2vvSkVdFYLOEjGu1GRMuz.oYZ5JeQWnBbD.6hZQfVoRP6S','John','Doe','México','2014-03-10','','$2y$10$OleO8N6IURAGF58pI8jQi.MIMTrr9mGb6/zkPJ73RzgNffRhBPwra','','2016-02-22 17:55:38','2016-02-01 22:41:06',NULL,'0000-00-00 00:00:00'),
+	(3,'','juanperez@hotmail.com','$2y$10$hI7DSjqOPxEJLrMsVzFmg.5NfN6Ss0mc8FRvHw0UassmltnTLPpNK','Juan','Peréz','México','0000-00-00','','$2y$10$ZIwuLtjkVqT5hDlhyMuthenZjBDVUAZAsdSxyHKoHC/qYvNlc/VeW','','2016-02-22 17:55:39','2016-02-01 20:59:13',NULL,'0000-00-00 00:00:00'),
+	(4,'','lamaria@gmail.com','$2y$10$2hCE.p8U/gcsQZmK2dstzuwV6t5rOcEn3V0WwUzyEkUCiskVug3NK','María','Saenz','Sonora','0000-00-00','','$2y$10$lTwGUay8IhKOdSXHJbLFBeU.6R.AN6MHhlbqOWclK4TqtZzt4XJ1.','','2016-02-22 17:55:39','2016-02-01 21:09:40',NULL,'0000-00-00 00:00:00'),
+	(5,'','cmurillo@outlook.com','$2y$10$POyNQ8BQN.jgNLm4Q5A2quehSWB19F33kPSV7LX82vtZ3yttEx6mC','Carlos','Murillo','Villahermosa','0000-00-00','','$2y$10$3kaifWKXAs4C.16Q0yp7AeAexaOph6ZdSRNhrg.ry2CfUsymSGfKa','','2016-02-22 17:55:40','2016-02-01 21:09:46',NULL,'0000-00-00 00:00:00'),
+	(6,'','javi@yahoo.com.mx','$2y$10$MObvi6o7tYsXx0NDPJ46teGO8fVBa43dHb3I8VqWF7Y3PIfXbTpFa','Javier','Ortega','Mexico','0000-00-00','','$2y$10$fY9yn.6uicMYlRDt8uRe.eAh0dCfVV1r6SQ6DpWMLZtJp2hL8g5Dq','','2016-02-22 17:55:40','2016-02-01 21:10:20',NULL,'0000-00-00 00:00:00'),
+	(12,'','angel@abostudio.mx','$2y$10$1SD9CmccLbcEs5ipryNLo.u/pZwC4ifj0Y/nwZWlPvm4a/i4v5DZS','Ángel ','Ortega ','México ','1994-12-02','','$2y$10$Eyoo9m6GzzQo5X6LXkn/HureLPSeK7Pj6xT9/RZmHuvW6X.DPaPw2','','2016-02-24 21:37:08','2016-02-25 04:37:08',NULL,'2016-02-25 04:37:08'),
+	(13,'','andrea@avanna.com.mx','$2y$10$6oqz4wEdWkkWRpJCLUnJG.xc329Pj.OnyQ4oW7JFfyhdVP4b047Fy','Andrea ','Villanuevs','Mexico','1987-10-16',NULL,'$2y$10$MJU7XGfwqLCg/P.zSAJqx.vtPe/VzU5j5KyWt5TmZOSvePMc3XnqC','','2016-02-23 15:36:15','2016-02-23 22:36:15',NULL,'2016-02-23 22:36:15'),
+	(14,'','tangamampilia@hotmail.com','$2y$10$7S5B69uoByBKveQe/zuLH.GWsEOLjjTIb1yIXn7t8X2K9d3cpng2G','Daniel','Fernandez','Mexico','1995-12-02',NULL,'$2y$10$q5BxdrXzaDVxgzWRTYdAqO2ccWvwTXo6ruEYYMeLkrnsmBpCMcvHK','','2016-02-24 11:57:50','2016-02-24 18:57:50',NULL,'2016-02-24 18:57:50'),
+	(15,'','jaime.banus@rbconsulting.es','$2y$10$KA11QFDoZ58gVd1O8PHa9uGUjX/0vQsEiZIVvHo6Almt4IO0kckNG','jaine','banus','Madrid','1980-10-07',NULL,'$2y$10$O1YshYnl4.dFWsDeqHNeIOtPheQhfBe.j1uPu3L5H5TDdqrWm6YHG','','2016-02-27 16:17:46','2016-02-27 23:17:46',NULL,'2016-02-27 23:17:46');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -587,12 +627,52 @@ CREATE TABLE `users_activities` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `activity_id` int(11) DEFAULT NULL,
-  `created_at` int(11) DEFAULT NULL,
-  `updated_at` int(11) DEFAULT NULL,
-  `deleted_at` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
+LOCK TABLES `users_activities` WRITE;
+/*!40000 ALTER TABLE `users_activities` DISABLE KEYS */;
+
+INSERT INTO `users_activities` (`id`, `user_id`, `activity_id`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+	(6,1,2,NULL,NULL,NULL);
+
+/*!40000 ALTER TABLE `users_activities` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table users_notifications
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `users_notifications`;
+
+CREATE TABLE `users_notifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `device` varchar(11) DEFAULT NULL,
+  `token` text,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+LOCK TABLES `users_notifications` WRITE;
+/*!40000 ALTER TABLE `users_notifications` DISABLE KEYS */;
+
+INSERT INTO `users_notifications` (`id`, `user_id`, `device`, `token`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+	(1,1,'iOS','8e1a7d6d4a4faee175f8787889cf41c85dcb08686882451a3b390a37523802a9','2016-02-25 02:59:34','2016-02-25 02:59:34',NULL),
+	(3,12,'iOS','8ef563a57047a59fa297231217e424ccb13b25e8f8027681e02e533ea5b28fdc','2016-02-25 04:37:09','2016-02-25 04:37:09',NULL),
+	(4,1,'iOS','7318d8ef221f79473f6306256962c233bc149d1b5a144ae9767b4766d741ddff','2016-02-28 01:40:54','2016-02-28 01:40:54',NULL),
+	(5,1,'Android','cRVH4QJLeJA:APA91bHsupByu8WaRDldqRcyvAYbnuMHeuiREmEQV2tKXTZ9RWPN4W0tqTFmrVOVBGfD4dfAiP4zvajr86IsuaIrYb7NrcZjcpSGqRd8GnoLhUli6dQfG5Efe2xyU_CLPqeYsG1lOVIV','2016-02-28 04:11:26','2016-02-28 04:11:26',NULL),
+	(6,1,'Android','cEhCudDGbJU:APA91bHLubx7wgvFIrzI2HT1l-bkgFsCeIaYwZ5aeFExjFCbVS4262hPMBfxu3JhxvjzQ-YZI7RL0z_Ehh1XpzN7bKR1IMBxWTX6eX-BvZ1zI5KkpSyXKZbvTa6lgqs4xC6IX9mxH_XU','2016-02-28 06:40:58','2016-02-28 06:40:58',NULL);
+
+/*!40000 ALTER TABLE `users_notifications` ENABLE KEYS */;
+UNLOCK TABLES;
 
 
 
