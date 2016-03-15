@@ -40,23 +40,27 @@
 			<tr>
 				<th class="avatar"></th>
 				<th>Título</th>
-				<th>Descripción</th>
 				<th>Horario</th>
 				<th>Tipo</th>
+				<th>Cerrado</th>
 				<th class="short-column">Activo</th>
 				<th class="action"></th>
 			</tr>
 		</thead>
 		<tbody>
 		@foreach ($rows as $x => $row)
-			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->disabled == 1 ) disabled @endif">
+			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->active == 0 ) text-muted @endif">
 				<td><span class="avatar"><img src="{!! $row->crop(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
 				<td>{!! $row->title !!}</td>
-				<td>{!! strlen($row->description) > 50 ? (substr($row->description, 0, 50)."...") : $row->description !!}</td>
+				<!--<td>{!! strlen($row->description) > 50 ? (substr($row->description, 0, 50)."...") : $row->description !!}</td>-->
 				<td>{!! $row->date_from !!}<br/>{!! $row->date_to !!}</td>
 				<td>{!! $row->type->name !!}</td>
 				<td class="short-column"> 
 					@if ($row->active == 1)
+					Si @else No @endif
+				</td>
+				<td class="short-column"> 
+					@if ($row->closed == 1)
 					Si @else No @endif
 				</td>
 				<td class="action text-right">

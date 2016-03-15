@@ -9,4 +9,7 @@ class Activity extends Content {
         return $this->belongsTo('App\Models\ActivityType');
     }	
     
+    public function status() {
+        return $this->belongsTo('App\Models\ActivityStatus');
+    }	
 }

@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, App\User;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Input, Validator, View, Redirect, Auth, App\User;
 
 class UserController extends Controller {
 	
@@ -61,20 +60,20 @@ class UserController extends Controller {
 			
 		} else {
 			
-			$fields = [	
-				"email" 	 	 => Input::get('email'),
-				"first_name" 	 => Input::get('first_name'),
-				"last_name"  	 => Input::get('last_name'),
-				"birthday"  	 => Input::get('birthday', ''),
-				"city"  		 => Input::get('city', 'Mexico'),
-			];		
+			$data->email 		= Input::get('email');	
+			$data->first_name 	= Input::get('first_name');	
+			$data->last_name	= Input::get('last_name');	
+			$data->birthday 	= Input::get('birthday');	
+			$data->city 		= Input::get('city');
+			$data->phone 		= Input::get('phone');	
+			$data->active 		= Input::get('active', 0);	
 			
 			if ($password_validate) {
-				$fields['password'] = Input::get('password');
+				$data->password = bcrypt(Input::get('password'));
 			}		
 			
-			Sentinel::update($data, $fields);
-
+			$data->update();
+			
 			return Redirect::to('admin/users/edit/'.$id)->with("message", "El usuario ha sido guardado");	
 		}
 		
@@ -92,7 +91,7 @@ class UserController extends Controller {
 	 	
 	public function getMe() {
 	
-		if (!$data = Sentinel::getUser()) {
+		if (!$data = Auth::user()) {
 			return Redirect::to('users');
 		}
 		return View::make('admin.users.me')->with("data", $data);			
@@ -101,7 +100,7 @@ class UserController extends Controller {
 	
 	public function postMe() {
 			
-		if (!$data = Sentinel::getUser()) {
+		if (!$data = Auth::user()) {
 			return Redirect::to('users');
 		}	
 			
@@ -120,12 +119,12 @@ class UserController extends Controller {
 			
 		} else {
 
-			$fields = ["email" => Input::get('email'),];		
+			$data->email = Input::get('email');	
 			if ($password_validate) {
-				$fields['password'] = Input::get('password');
+				$data->password = bcrypt(Input::get('password'));
 			}		
 			
-			Sentinel::update($data, $fields);
+			$data->update();
 
 			return Redirect::to('admin/users/me')->with("message", "Tus datos han sido actualizados");	
 		}
@@ -185,7 +184,7 @@ class UserController extends Controller {
 			return false;
 		}
 
-		$data = Sentinel::findById($id);
+		$data = User::find($id);
 		if ($data === null) {
 			return false;
 		}

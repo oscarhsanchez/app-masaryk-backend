@@ -63,6 +63,16 @@
 	</div>
 </div>
 
+<div class="form-group">
+	{!! Form::label('date_alert', 'Alerta', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		<div class='input-group date datetimepicker'>
+			{!! Form::text('date_alert', Input::old('date_alert'), array('class'=>'form-control')) !!}
+			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+	</div>
+</div>
+
 <!--
 <div class="form-group">
 	{!! Form::label('range', 'Horario', array('class' => 'col-sm-2 control-label')) !!}
@@ -77,6 +87,13 @@
 	{!! Form::label('type', 'Tipo', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
 		{!! Form::select('type', $types, Input::old('type'), array('class'=>'form-control')) !!}
+	</div>
+</div>
+
+<div class="form-group">
+	{!! Form::label('status', 'Estatus', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		{!! Form::select('status', $status, Input::old('status', 1) == 1, array('class'=>'form-control')) !!}
 	</div>
 </div>
 
@@ -97,6 +114,16 @@
 		{!! Form::text('geocomplete', '', array('class'=>'form-control', 'placeholder'=>'Escribe una dirección')) !!}
 	</div>
 </div>	
+
+<div class="form-group">
+	{!! Form::label('url', 'Liga', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		{!! Form::text('url', Input::old('url'), array('class'=>'form-control')) !!}
+		@if($errors->has('url'))
+		<div class="error"><small>Tiene que ser una url bien formateada</small></div>
+		@endif
+	</div>
+</div>
 
 <div class="form-group">
 	{!! Form::label('active', 'Activo', array('class' => 'col-sm-2 control-label')) !!}

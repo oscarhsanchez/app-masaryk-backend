@@ -49,7 +49,7 @@
 		</thead>
 		<tbody>
 		@foreach ($rows as $x => $row)
-			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->active == 1 ) disabled @endif">
+			<tr class="{!! $x++%2==0?'odd':'even' !!}  @if ( $row->active == 0 ) text-muted @endif">
 				<td><span class="avatar" style=""></span></td>
 				<td>{!! $row->first_name == "" ? "--------" : $row->first_name !!}</td>
 				<td>{!! $row->last_name  == "" ? "--------" : $row->last_name !!}</td>
@@ -59,9 +59,8 @@
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="action pull-right">
+				<td class="action text-right">
 					<a href='{!! URL::to('admin/users/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
-					<!-- <a href='{!! URL::to('users/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span> Eliminar </a>-->
 				</td>
 			</tr>
 	    @endforeach			

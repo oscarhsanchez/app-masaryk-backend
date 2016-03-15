@@ -1,10 +1,14 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Response, DB, Mail, URL, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity, App\Models\UserNotification;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
-use Cartalyst\Sentinel\Laravel\Facades\Reminder;
+use Input, Validator, View, Response, DB, Mail, URL, Auth, Session;
+use App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity, App\Models\UserNotification, App\Models\Option;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Mail\Message;
 
 class ApiController extends Controller {
+
+	use ResetsPasswords;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -52,12 +56,12 @@ class ApiController extends Controller {
      */
     public function postLogin() {
 	    
-	    $email    	 = Input::get('email');
-		$password 	 = Input::get('password');
-		$credentials = array('email' => $email, 'password' => $password);
+    	$email    = Input::get('email');
+		$password = Input::get('password');
 		
-		if ($user = Sentinel::authenticateAndRemember($credentials)) {
+		if (Auth::attempt(['email' => $email, 'password' => $password, 'active' => 1], true)) {
 			
+			$user = Auth::user();
 			unset($user->password);
 			unset($user->facebook_token);
 			unset($user->created_at);
@@ -101,21 +105,19 @@ class ApiController extends Controller {
 			
 			$remember_token = bcrypt(str_random(20));
 			
-			$fields = [	
-				"facebook_id" 	 => Input::get('fb_id', ''),
-				"email" 	 	 => Input::get('email'),
-				"password" 	 	 => Input::get('password'),
-				"first_name" 	 => Input::get('first_name'),
-				"last_name"  	 => Input::get('last_name'),
-				"facebook_token" => Input::get('facebook_token', ''),
-				"birthday"  	 => Input::get('birthday', ''),
-				"city"  		 => Input::get('city', 'Mexico'),
-				"remember_token" => $remember_token,
-				"facebook_token" => Input::get('token', ''),
-			];		
-			
-			$user = Sentinel::registerAndActivate($fields);
-			Sentinel::login($user);
+			$data = new User();
+			$data->facebook_id  = Input::get('fb_id', '');
+			$data->email 		= Input::get('email');
+			$data->password 	= bcrypt(Input::get('password'));	
+			$data->first_name 	= Input::get('first_name');	
+			$data->last_name	= Input::get('last_name');	
+			$data->birthday 	= Input::get('birthday');	
+			$data->city 		= Input::get('city');	
+			$data->remember_token = $remember_token;
+			$data->facebook_token = Input::get('token', '');
+
+			$data->save();
+			Auth::loginUsingId($data->id);
 
 			return Response::json(array("success"=>true, "service"=>"register", "data"=>array("remember_token"=>$remember_token)));
 						
@@ -145,8 +147,8 @@ class ApiController extends Controller {
 		    		    
 		    if ($user) {
 			    
-			    $user = Sentinel::findById($user->id);
-				Sentinel::loginAndRemember($user);
+			    $user = User::findById($user->id);
+				Auth::loginUsingId($user->id);
 				return Response::json(array("success"=>true, "service"=>"facebook", "data"=>array("logged"=>true)));
 				 
 		    } else {
@@ -183,7 +185,7 @@ class ApiController extends Controller {
      * @access public
      * @return void
      */
-    public function postRecover() {
+    public function anyRecover() {
 	    	    
 	    $email = Input::get("email", '');
 		$rules = [ "email" => "required|email"];
@@ -193,22 +195,22 @@ class ApiController extends Controller {
 			return Response::json(array("success"=>false, "service"=>"recover", "error_code"=>400, "error_message"=>"Verifica el formato de tu correo."));
 			
 		} else {
-			
-			$user = Sentinel::findByCredentials(['login' => $email]);
-			
-			if (!$user) {
-				return Response::json(array("success"=>false, "service"=>"recover", "error_code"=>403, "error_message"=>"Correo no encontrado."));
-			}
-			
-			$reminder = Reminder::create($user);
-			$link     = "http://".$_SERVER['SERVER_NAME']."/api/code?email=".$email."&amp;code=".$reminder->code;
-			$name 	  = trim($user->first_name)." ".trim($user->last_name);
-			
-			Mail::send('emails.recover', ['email' => $email, 'link' => $link], function($message) use ($email, $name) {
-				$message->to($email, $name)->subject('Camina Masarik - Recuperar Contraseña');
+						
+			$broker   = $this->getBroker();
+			$response = Password::broker($broker)->sendResetLink(["email"=>$email], function (Message $message) use ($email) {
+				Session::set("reset.password.email", $email);
+            	$message->subject('Camina Masarik - Recuperar Contraseña');
 			});
+			
+			switch ($response) {
+            	case Password::RESET_LINK_SENT:
+                	return Response::json(array("success"=>true, "service"=>"recover", "response"=>$response));
+
+				case Password::INVALID_USER:
+            		default:
+					return Response::json(array("success"=>false, "service"=>"recover", "error_code"=>403, "error_message"=>"Correo no encontrado."));
+			}
 		
-			return Response::json(array("success"=>true, "service"=>"recover"));
 	    }	
     }  
     
@@ -220,33 +222,39 @@ class ApiController extends Controller {
      * 
      * @access public
      * @return void
-     */
-    public function postCode() {
+    */
+    public function getCode() {
 	    
-	    $email = Input::get("email", '');
-	    $code  = Input::get("code",  '');
-	    
-	    $user  = Sentinel::findByCredentials(['login' => $email]);
-	    if (!$user) {
-		    return "Bad credentials";
-	    }
-	    
-	    $password     = str_random(8);
-	    if ($reminder = Reminder::complete($user, $code, $password)) {
-		    
-		    $name = trim($user->first_name)." ".trim($user->last_name);
-			Mail::send('emails.reset', ['email' => $email, 'password' => $password], function($message) use ($email, $name) {
+	    $token  = Input::get("t", "");
+	    $email  = Input::get("e", "");
+	    $psswrd = strtolower(str_random(8));
+	    $broker = $this->getBroker();
+	    $params = ["email" => $email, "token" => $token, "password" => $psswrd, "password_confirmation" => $psswrd];
+
+        $response = Password::broker($broker)->reset($params, function ($user, $password) {
+            $this->resetPassword($user, $password);
+        });
+		
+		if ($response == Password::PASSWORD_RESET) {
+			
+			$user = User::where("email", "=", $email)->first();
+			$name = trim($user->first_name)." ".trim($user->last_name);
+			
+			$user->password = bcrypt($psswrd);
+			$user->save();
+			
+			Mail::send('emails.reset', ['email' => $email, 'password' => $psswrd], function($message) use ($email, $name) {
 				$message->to($email, $name)->subject('Camina Masarik - Contraseña Nueva');
 			});
 			
 			return "Check your email";
-		
+			
 		} else {
-			return "Bad credentials";		
+			return "Bad credentials";
 		}
-	  	
+        	  	
     }
-    
+     
           
     
     
@@ -261,7 +269,8 @@ class ApiController extends Controller {
 	    if (!$user = $this->_validate()) {
 			return Response::json(array("success"=>false, "service"=>"verify", "error_code"=>403, "error_message"=>"Sesión no válida."));
 		} else {
-			return Response::json(array("success"=>true, "service"=>"verify"));
+			$data = array("splash"=>$this->_splash());
+			return Response::json(array("success"=>true, "service"=>"verify", "data"=>$data));
 		}
 	  	
     }  
@@ -282,12 +291,11 @@ class ApiController extends Controller {
 	    
 	    $user  = User::where("remember_token", "=", trim($token))
 	   			     ->where("remember_token", "!=", "")->first();
-	   			     
-	   			     //->where("email", "=", $email)
-	  	
+	   			     	  	
 	  	if ($user) {
-		  	Sentinel::login(Sentinel::findById($user->id));
-		  	return Response::json(array("success"=>true, "service"=>"renew"));
+		  	$data = array("splash" => $this->_splash());
+		  	Auth::loginUsingId($user->id);
+		  	return Response::json(array("success"=>true, "service"=>"renew", "data"=>$data));
 	  	}
 	  	
 	  	return Response::json(array("success"=>false, "service"=>"renew", "error_code"=>403, "error_message"=>"Sesión no válida."));
@@ -363,17 +371,15 @@ class ApiController extends Controller {
 			
 		} else {
 			
-			$fields = [	
-				"email" 	 	 => Input::get('email'),
-				"first_name" 	 => Input::get('first_name'),
-				"last_name"  	 => Input::get('last_name'),
-				"birthday"  	 => Input::get('birthday', ''),
-				"city"  		 => Input::get('city', 'Mexico'),
-				"phone"  		 => Input::get('phone', ''),
-			];	
+			$user->email 		= Input::get('email');	
+			$user->first_name 	= Input::get('first_name');	
+			$user->last_name	= Input::get('last_name');	
+			$user->birthday 	= Input::get('birthday');	
+			$user->city 		= Input::get('city', 'Mexico');
+			$user->phone 		= Input::get('phone');	
 			
 			if ($password_validate) {
-				$fields['password'] = Input::get('password');
+				$user->password = bcrypt(Input::get('password'));
 			}
 			
 			if (Input::hasFile('image')) {
@@ -383,7 +389,8 @@ class ApiController extends Controller {
 				}	
 			}
 			
-			Sentinel::update($user, $fields);
+			$user->save();
+
 			return $this->getProfile();
 						
 		}
@@ -473,7 +480,8 @@ class ApiController extends Controller {
 	   				  ->leftJoin("users_activities", "activities.id", "=", "users_activities.activity_id")
 	   				  ->where("active", "=", 1)
 	   				  ->get(array("activities.id", "activities.title", "activities.address", "activities.description", 
-	   				  			  "activities.lat", "activities.lng", "activities.type_id", "activities_type.name AS type", "activities.date_from", 
+	   				  			  "activities.lat", "activities.lng", "activities.url", "activities.type_id", 
+	   				  			  "activities.status_id AS status", "activities_type.name AS type", "activities.date_from", 
 	   				  			  "activities.date_to", DB::raw("IF(`users_activities`.`user_id`=1,1,0) AS scheduled")));
 	   					
 	   	foreach ($items as $item) {		   	
@@ -590,7 +598,7 @@ class ApiController extends Controller {
      */
      
     public function getLogout() {
-		 Sentinel::logout();
+		 Auth::logout();
 		 return Response::json(array("success"=>true, "service"=>"logout"));
 	}
 	
@@ -603,7 +611,7 @@ class ApiController extends Controller {
 	
 	private function _validate() {
 
-		$data = Sentinel::check();
+		$data = Auth::user();
 		if ($data === null) {
 			return false;
 		}
@@ -617,6 +625,12 @@ class ApiController extends Controller {
 		}
 		
 		return $data;
+	}
+	
+	private function _splash() {		
+		$splash = Promo::find(Option::get("splash", 0));
+		//print_r($splash);
+		return $splash->thumb(800, 1200);
 	}
 	
 }

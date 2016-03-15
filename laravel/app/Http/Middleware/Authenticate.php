@@ -3,8 +3,8 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Support\Facades\Auth;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Auth;
+use Zizaco\Entrust\Entrust;
 
 class Authenticate
 {
@@ -21,11 +21,11 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
 	    
-	    if ($user = Sentinel::check()) {
-			if ($user->hasAccess(['access.admin'])) {
-				return $next($request);
+	    if ($user = Auth::user()) {
+			if ($request->is('admin/*') && $user->hasRole('admin')) {
+		    	return $next($request);
 			}
-    	} 
+		}
     	
 		if ($request->ajax()) {
             return response('Unauthorized.', 401);

@@ -19,6 +19,24 @@
 	</div>
 @endif
 
+{!! Form::open(array("url"=>"admin/promos", "method"=>'POST', 'class'=>'form-inline')) !!}
+	<div class="row">
+		<div class="col-xs-3 col-md-1 text-right">
+			{!! Form::label('splash', 'Destacado', array('class' => 'control-label')) !!}
+		</div>
+		<div class="col-xs-6 col-md-10">
+			{!! Form::select('splash', $promos, Input::old('splash', $splash), array('class'=>'form-control')) !!}
+		</div>
+		<div class="col-xs-3 col-md-1">
+			<button type="submit" class="btn btn-info">
+			<span class="glyphicon glyphicon-saved"></span>
+		</button>
+		</div>
+	</div>
+{!! Form::close() !!}
+
+<hr/>
+
 {!! Form::open(array("method"=>'GET', 'class'=>'form-inline')) !!}
 	<div class="row">
 		<div class="col-xs-6">
@@ -48,7 +66,7 @@
 		</thead>
 		<tbody>
 		@foreach ($rows as $x => $row)
-			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->active == 1 ) disabled @endif">
+			<tr class="{!! $x++%2==0?'odd':'even' !!}  @if ( $row->active == 0 ) text-muted @endif">
 				<td><span class="avatar"><img src="{!! $row->crop(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
 				<td>{!! $row->title !!}</td>
 				<td>{!! $row->store  ? $row->store->title : "N/A" !!}</td>

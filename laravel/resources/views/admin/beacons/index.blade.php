@@ -46,7 +46,7 @@
 		</thead>
 		<tbody>
 		@foreach ($rows as $x => $row)
-			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->active == 1 ) disabled @endif">
+			<tr class="{!! $x++%2==0?'odd':'even' !!}  @if ( $row->active == 0 ) text-muted @endif">
 				<td>{!! $row->uuid !!}</td>
 				<td></td>
 				<td> 

@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, App\User, App\Models\Activity, App\Models\ActivityType;
+use Input, Validator, View, Redirect, App\User, App\Models\Activity, App\Models\ActivityType, App\Models\ActivityStatus;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 class ActivitiesController extends Controller {
@@ -68,14 +68,18 @@ class ActivitiesController extends Controller {
 	public function getAdd() {
 		
 		$types = array("-------------------") + ActivityType::lists("name", "id")->toArray();
-		return View::make('admin.activities.add')->with("types", $types);			
+		$stats = ActivityStatus::lists("name", "id")->toArray();
+		
+		return View::make('admin.activities.add')->with("types", $types)
+												 ->with("status", $stats);			
 		
 	}
 	
 	public function postAdd() {
 
 		$input = Input::all();
-		$rules = array("title" 	   => "required|min:6");
+		$rules = array("title" => "required|min:6",
+					   "url"   => "required|url");
 		
 		$validation = Validator::make($input, $rules);
 		if ($validation->fails()) {
@@ -89,9 +93,12 @@ class ActivitiesController extends Controller {
 			$data->address  	= Input::get('address');
 			$data->date_from  	= Input::get('date_from');
 			$data->date_to  	= Input::get('date_to');
+			$data->date_alert  	= Input::get('date_alert');
 			$data->lat  		= Input::get('latitude');
 			$data->lng  		= Input::get('longitude');
-			$data->type_id  	= Input::get('type');	
+			$data->url  		= Input::get('url');
+			$data->type_id  	= Input::get('type');
+			$data->closed 		= Input::get("closed", 0);	
 			$data->active 		= Input::get("active", 0);	
 			$data->save();
 			
@@ -124,9 +131,12 @@ class ActivitiesController extends Controller {
 			return Redirect::to('activities');
 		}
 		
-		$types = array("-------------------") + ActivityType::lists("name", "id")->toArray();										   		
+		$types = array("-------------------") + ActivityType::lists("name", "id")->toArray();
+		$stats = ActivityStatus::lists("name", "id")->toArray();
+												   		
 		return View::make('admin.activities.edit')->with("data", $data)
-											  ->with("types", $types);			
+											  ->with("types",  	 $types)
+											  ->with("status", 	 $stats);			
 		
 	}
 	
@@ -137,7 +147,8 @@ class ActivitiesController extends Controller {
 		}	
 			
 		$input = Input::all();
-		$rules = array("title" => "required|min:6");
+		$rules = array("title" => "required|min:6",
+					   "url"   => "required|url");
 		
 		$validation = Validator::make($input, $rules);
 		if ($validation->fails()) {
@@ -150,9 +161,12 @@ class ActivitiesController extends Controller {
 			$data->address  	= Input::get('address');
 			$data->date_from  	= Input::get('date_from');
 			$data->date_to  	= Input::get('date_to');
+			$data->date_alert  	= Input::get('date_alert');
 			$data->lat  		= Input::get('latitude');
 			$data->lng  		= Input::get('longitude');
+			$data->url  		= Input::get('url');
 			$data->type_id  	= Input::get('type');	
+			$data->closed 		= Input::get("closed", 0);	
 			$data->active 		= Input::get("active", 0);	
 			$data->save();
 			

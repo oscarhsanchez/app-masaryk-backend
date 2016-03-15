@@ -1,25 +1,19 @@
 <?php namespace App\Models;
 
-use Cartalyst\Sentinel\Users\EloquentUser as CartalystUser;
 use Intervention\Image\ImageManagerStatic as Image;
+use Zizaco\Entrust\Traits\EntrustUserTrait;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\CanResetPassword;
+use Illuminate\Auth\Passwords\CanResetPassword;
 use URL;
 
-class User extends CartalystUser {
+class User extends Model implements CanResetPassword {
 	
+	use EntrustUserTrait;
+	use CanResetPassword;
 	
 	protected $filepath = "assets/uploads/users";
-    protected $fillable = [
-        'email',
-        'password',
-        'last_name',
-        'first_name',
-        'facebook_token',
-        'remember_token',
-        'city',
-        'birthday',
-        'facebook_id',
-        'phone',
-    ];
+	
     
     public function notifications() {
         return $this->hasMany('App\Models\UserNotification');

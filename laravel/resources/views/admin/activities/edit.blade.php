@@ -64,9 +64,26 @@
 </div>
 
 <div class="form-group">
+	{!! Form::label('date_alert', 'Alerta', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		<div class='input-group date datetimealert'>
+			{!! Form::text('date_alert', Input::old('date_alert', $data->date_alert), array('class'=>'form-control')) !!}
+			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
+	</div>
+</div>
+
+<div class="form-group">
 	{!! Form::label('type', 'Tipo', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
 		{!! Form::select('type', $types, Input::old('type', $data->type_id), array('class'=>'form-control')) !!}
+	</div>
+</div>
+
+<div class="form-group">
+	{!! Form::label('status', 'Estatus', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		{!! Form::select('status', $status, Input::old('status', $data->status_id) == 1, array('class'=>'form-control')) !!}
 	</div>
 </div>
 
@@ -87,6 +104,16 @@
 		{!! Form::text('geocomplete', '', array('class'=>'form-control', 'placeholder'=>'Escribe una dirección')) !!}
 	</div>
 </div>	
+
+<div class="form-group">
+	{!! Form::label('url', 'Liga', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		{!! Form::text('url', Input::old('url', $data->url), array('class'=>'form-control')) !!}
+		@if($errors->has('url'))
+		<div class="error"><small>Tiene que ser una url bien formateada</small></div>
+		@endif
+	</div>
+</div>
 
 <div class="form-group">
 	{!! Form::label('active', 'Activo', array('class' => 'col-sm-2 control-label')) !!}
@@ -138,6 +165,7 @@
 		map.setOptions({styles: styles});
 		
 		$('.datetimepicker').datetimepicker({defaultDate:"moment", format:"YYYY-MM-DD HH:mm"});
+		//$('.datetimealert').datetimepicker({defaultDate:"moment", format:"YYYY-MM-DD HH:mm", minuteStep});
 		
 	})
 

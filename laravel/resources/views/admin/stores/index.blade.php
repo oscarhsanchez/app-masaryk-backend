@@ -49,7 +49,7 @@
 		</thead>
 		<tbody>
 		@foreach ($rows as $x => $row)
-			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->disabled == 1 ) disabled @endif">
+			<tr class="{!! $x++%2==0?'odd':'even' !!}  @if ( $row->active == 0 ) text-muted @endif">
 				<td><span class="avatar"><img src="{!! $row->crop(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
 				<td>{!! $row->title !!}</td>
 				<td>{!! strlen($row->address) > 50 ? (substr($row->address, 0, 50)."...") : $row->address !!}</td>

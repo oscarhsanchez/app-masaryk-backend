@@ -23,7 +23,7 @@
 |
 */
 
-Route::group(['middleware' => ['auth', 'web']], function () {    	
+Route::group(['middleware' => ['web', 'auth']], function () {    	
     Route::group(array('prefix' => 'admin'), function() {		
 		Route::controller('users',  	"UserController");
 		Route::controller('promos', 	"PromosController");
@@ -33,9 +33,9 @@ Route::group(['middleware' => ['auth', 'web']], function () {
 	});
 });
 
-
 Route::group(['middleware' => ['web']], function () {
    	Route::controller('api', 'ApiController');
    	Route::controller('', 	 'HomeController');
 });
+
 

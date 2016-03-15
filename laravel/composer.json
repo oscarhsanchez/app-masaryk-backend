@@ -11,7 +11,7 @@
         "barryvdh/laravel-debugbar": "~2.0",
         "cviebrock/eloquent-sluggable": ">=3.0.0-alpha",
         "laravelcollective/html": "5.*",
-        "cartalyst/sentinel": "2.*"
+        "zizaco/entrust": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

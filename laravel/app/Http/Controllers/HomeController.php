@@ -1,10 +1,13 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, App\User;
+use Input, Validator, View, Redirect, Auth, App\User;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
+use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class HomeController extends Controller {
+	
+	use ResetsPasswords;
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,11 +29,11 @@ class HomeController extends Controller {
 	 
 	public function getIndex() {
 				
-		if ($user = Sentinel::check()) {
-			if ($user->hasAccess(['access.admin'])) {
+		if ($user = Auth::user()) {
+			if ($user->hasRole('admin')) {
 				return Redirect::to($this->redirect);
 			}
-    	} 
+		}
     	
     	return View::make('home.index');
 	}
@@ -39,10 +42,11 @@ class HomeController extends Controller {
     	
     	$username    = Input::get('username');
 		$password    = Input::get('password');
-		$credentials = array('email' => $username, 'password' => $password);
 		
-		if (Sentinel::authenticateAndRemember($credentials)) {
-			return Redirect::to($this->redirect);
+		if (Auth::attempt(['email' => $username, 'password' => $password, 'active' => 1], true)) {
+			if (Auth::user()->hasRole('admin')) {
+				return Redirect::to($this->redirect);
+			}
 		}
 			
 		return Redirect::to('')->with('login_errors', true);
@@ -59,7 +63,7 @@ class HomeController extends Controller {
      */
      
     public function getLogout() {
-		 Sentinel::logout();
+		 Auth::logout();
 		 return Redirect::to('');
 	}	
 	
@@ -76,11 +80,11 @@ class HomeController extends Controller {
      
     public function getAdmin() {
 		
-		if ($user = Sentinel::check()) {
-			if ($user->hasAccess(['access.admin'])) {
+		if ($user = Auth::user()) {
+			if ($user->hasRole('admin')) {
 				return Redirect::to($this->redirect);
 			}
-    	} 
+		} 
     	
 		return Redirect::to('');
 	}

@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon;
+use Input, Validator, View, Redirect, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Option;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 class PromosController extends Controller {
@@ -195,14 +195,24 @@ class PromosController extends Controller {
 		$order = explode("|", $order);
 		$rows->take($limit)->skip($page * $limit)->orderBy($order[0], $order[1]);
 		$rows = $rows->get();
-			   								   
-		return View::make('admin.promos.index')->with("rows",  $rows)
-											  ->with("search", $search)
-											  ->with("page",   $page)
-											  ->with("limit",  $limit)
-											  ->with("total",  $total)
-											  ->with("show",   min(($page + 1) * $limit, $total))
-											  ->with("torder", $order[1] == "asc" ? "desc" : "asc");
+		
+		$promos = Promo::lists("title", "id");
+		$splash = Option::get("splash", 0);
+					   								   
+		return View::make('admin.promos.index')->with("rows",   $rows)
+											  ->with("search",  $search)
+											  ->with("page",    $page)
+											  ->with("limit",   $limit)
+											  ->with("total",   $total)
+											  ->with("show",    min(($page + 1) * $limit, $total))
+											  ->with("torder",  $order[1] == "asc" ? "desc" : "asc")
+											  ->with("promos",  $promos)
+											  ->with("splash",  $splash);
+	}
+	
+	public function postIndex() {
+		Option::set("splash", Input::get('splash', 0));
+		return Redirect::to('admin/promos')->with("message", "La promoción destacada ha sido actualizada");
 	}
     
     
