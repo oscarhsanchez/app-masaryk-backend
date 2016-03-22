@@ -1,0 +1,1 @@
+[22-Mar-2016 08:52:18 UTC] PHP Warning:  stream_socket_client(): unable to connect to ssl://gateway.sandbox.push.apple.com:2195 (Connection refused) in /home/abostudio/public_html/domains/masaryk.avanna.tech/certificates/simplepush.php on line 21

@@ -3,9 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Models\Activity, App\Models\Option, App\Models\UserNotification;
-use Mail;
-use Carbon;
+use App\Models\Activity, App\Models\Option, App\Models\UserToken, App\Models\Notification;
+use Mail, Carbon, DB;
 
 class Notifications extends Command
 {
@@ -21,7 +20,7 @@ class Notifications extends Command
      *
      * @var string
      */
-    protected $description = 'Activities notifications';
+    protected $description = 'Notifications';
 
     /**
      * Create a new command instance.
@@ -38,31 +37,45 @@ class Notifications extends Command
      *
      * @return mixed
      */
-    public function handle()
-    {
-		
-		$email = "tangamampilia@gmail.com";
-		$date  = Carbon\Carbon::now();
-		
+    public function handle() {
+	    
+	    $date  = Carbon\Carbon::now();
 		$date->setTimezone('America/Mexico_City');
 		$time   = $date->toDateTimeString();
 		
-		$notifications = UserNotification::all();
-		$result = array();
-		
-		foreach ($notifications as $n) {
-			if ($n->device == "Android") {
-				$result[] = $this->android("Hola Mundo", $n->token);
+		$notification = Notification::where("scheduled", "<=", $time)
+									->where("scheduled", "!=", "0000-00-00 00:00:00")
+									->where("active", 	 "=", 1)
+									->where("completed", "=", 0)
+									->first();
+	   	    
+	    if ($notification) {
+		    
+		    $lstid = $notification->current;
+		    $mssgs = $notification->message;
+		    $users = UserToken::where("id", ">", $lstid)
+		    						 ->orderBy("id", "asc")
+		    						 ->take(50)
+		    						 ->get();
+		    
+		    foreach ($users as $n) {
+				if ($n->device == "Android") {
+					$result[] = $this->android($mssgs, $n->token);
+				} else if ($n->device == "iOS") {
+					$result[] = $this->ios($mssgs, $n->token);
+				}
+				$lstid = $n->id;
 			}
-		}
-		
-		Option::set("last", $time);
-	    Mail::send('emails.notification', ["time"=>$time], function($message) use ($email) {
-			$message->to($email)->subject('CRONJOB');
-		});
-
-	    $this->info(var_export($result, true));
-        //
+			
+			$last = UserToken::orderBy("id", "desc")->first();
+			
+			$notification->current   = $lstid;
+			$notification->completed = $last->id == $lstid;
+			
+			$notification->save();
+		    
+	    }
+	    
     }
     
     public function android($message, $token) {
@@ -88,7 +101,7 @@ class Notifications extends Command
  
         $result = curl_exec($ch);
         if ($result === FALSE) {
-            die('Curl failed: ' . curl_error($ch));
+            return ('Curl failed: ' . curl_error($ch));
         }
  
         curl_close($ch);
@@ -98,9 +111,13 @@ class Notifications extends Command
     
     public function ios($message, $token) {
 	    
+	    $ouput = file_get_contents("http://apps.tangamampilia.net/masaryk/index.php?token=".$token."&message=".$message);
+	    return $ouput;
+	    
+	    
 		$passphrase = '123456';
 		$ctx = stream_context_create();
-		stream_context_set_option($ctx, 'ssl', 'local_cert', 'libraries/notifications.pem');
+		stream_context_set_option($ctx, 'ssl', 'local_cert', public_path('certificates/notifications.pem'));
 		stream_context_set_option($ctx, 'ssl', 'passphrase', $passphrase);
 		$fp = stream_socket_client('ssl://gateway.sandbox.push.apple.com:2195', $err, $errstr, 60, STREAM_CLIENT_CONNECT|STREAM_CLIENT_PERSISTENT, $ctx);
 
@@ -108,7 +125,7 @@ class Notifications extends Command
 		if (!$fp) return("Failed to connect: $err $errstr" . PHP_EOL);
 
 
-		$body['aps'] = array('alert' => $message, 'title' => 'Curso iOS Development', 'mensaje' => 'Hola' );
+		$body['aps'] = array('alert' => $message, 'title' => 'Masaryk');
 		$payload = json_encode($body);
 
 		$msg = chr(0) . pack('n', 32) . pack('H*', $token) . pack('n', strlen($payload)) . $payload;

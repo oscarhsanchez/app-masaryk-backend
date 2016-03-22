@@ -34,7 +34,7 @@
 
 <div class="panel panel-default"> 
 
-	<div class="panel-body">
+	<div class="panel-body table-responsive">
 		<table class="table table-condensed table-striped table-hover">
 		<thead>
 			<tr>
@@ -42,9 +42,9 @@
 				<th>Título</th>
 				<th>Horario</th>
 				<th>Tipo</th>
-				<th>Cerrado</th>
-				<th class="short-column">Activo</th>
-				<th class="action"></th>
+				<th class="col-md-1 text-center">Activo</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -52,20 +52,17 @@
 			<tr class="{!! $x++%2==0?'odd':'even' !!} @if ( $row->active == 0 ) text-muted @endif">
 				<td><span class="avatar"><img src="{!! $row->crop(50, 50) !!}?r={!! rand() !!}" alt="{!! $row->title !!}"/></span></td>
 				<td>{!! $row->title !!}</td>
-				<!--<td>{!! strlen($row->description) > 50 ? (substr($row->description, 0, 50)."...") : $row->description !!}</td>-->
 				<td>{!! $row->date_from !!}<br/>{!! $row->date_to !!}</td>
 				<td>{!! $row->type->name !!}</td>
-				<td class="short-column"> 
+				<td class="text-center"> 
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="short-column"> 
-					@if ($row->closed == 1)
-					Si @else No @endif
+				<td class="action">
+					<a href='{!! URL::to('admin/activities/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span></a>
 				</td>
-				<td class="action text-right">
-					<a href='{!! URL::to('admin/activities/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
-					<a href='{!! URL::to('admin/activities/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span><!-- Eliminar --></a>
+				<td class="action">
+					<a href='{!! URL::to('admin/activities/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span></a>
 				</td>
 			</tr>
 	    @endforeach			

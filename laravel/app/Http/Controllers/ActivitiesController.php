@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use Input, Validator, View, Redirect, App\User, App\Models\Activity, App\Models\ActivityType, App\Models\ActivityStatus;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 class ActivitiesController extends Controller {
 
@@ -93,7 +92,6 @@ class ActivitiesController extends Controller {
 			$data->address  	= Input::get('address');
 			$data->date_from  	= Input::get('date_from');
 			$data->date_to  	= Input::get('date_to');
-			$data->date_alert  	= Input::get('date_alert');
 			$data->lat  		= Input::get('latitude');
 			$data->lng  		= Input::get('longitude');
 			$data->url  		= Input::get('url');
@@ -161,7 +159,6 @@ class ActivitiesController extends Controller {
 			$data->address  	= Input::get('address');
 			$data->date_from  	= Input::get('date_from');
 			$data->date_to  	= Input::get('date_to');
-			$data->date_alert  	= Input::get('date_alert');
 			$data->lat  		= Input::get('latitude');
 			$data->lng  		= Input::get('longitude');
 			$data->url  		= Input::get('url');

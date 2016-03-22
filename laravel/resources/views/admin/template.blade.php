@@ -69,13 +69,13 @@
 							<li><a href="{!! URL::to('admin/activities/add') !!}">Agregar</a></li>
 						</ul>
 					</li>
-					<li class="dropdown {!! Request::is('admin/beacons*') ? 'active' : '' !!}">
-						<a href="{!! URL::to('admin/beacons') !!}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-							<span class="glyphicon glyphicon-bell"></span> Beacons <span class="caret"></span>
+					<li class="dropdown {!! Request::is('admin/notifications*') ? 'active' : '' !!}">
+						<a href="{!! URL::to('admin/notifications') !!}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+							<span class="glyphicon glyphicon-bell"></span> Notificaciones <span class="caret"></span>
 						</a>
 						<ul class="dropdown-menu">
-							<li><a href="{!! URL::to('admin/beacons') !!}">Listado</a></li>
-							<li><a href="{!! URL::to('admin/beacons/add') !!}">Agregar</a></li>
+							<li><a href="{!! URL::to('admin/notifications') !!}">Listado</a></li>
+							<li><a href="{!! URL::to('admin/notifications/add') !!}">Agregar</a></li>
 						</ul>
 					</li>
 					<li class="{!! Request::is('admin/users') ? 'active' : '' !!}"><a href="{!! URL::to('admin/users') !!}"><span class="glyphicon glyphicon-user"></span> Usuarios</a></li>

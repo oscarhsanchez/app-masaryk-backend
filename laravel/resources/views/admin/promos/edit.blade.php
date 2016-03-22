@@ -37,13 +37,6 @@
 </div>
 
 <div class="form-group">
-	{!! Form::label('beacon', 'Beacon', array('class' => 'col-sm-2 control-label')) !!}
-	<div class="col-sm-10">
-		{!! Form::select('beacon', $beacons, Input::old('beacon', $data->beacon_id), array('class'=>'form-control')) !!}
-	</div>
-</div>
-
-<div class="form-group">
 	{!! Form::label('image', 'Imagen', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
 		{!! Form::file('image', array('class'=>'form-control')) !!}

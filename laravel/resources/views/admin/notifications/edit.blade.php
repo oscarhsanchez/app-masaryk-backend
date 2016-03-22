@@ -1,13 +1,13 @@
 @extends('admin.template')
 
 @section('title')
-	Editar Beacon
+	Editar Notificación
 @endsection
 
 @section('content')
 
 <div class="page-header">
-	<h2>Editar Beacon</h2>
+	<h2>Editar Notificación</h2>
 </div>
 
 @if (Session::get('message') || Session::get('error'))
@@ -20,12 +20,22 @@
 {!! Form::open(array('method' => 'post', 'files' => true, 'class' => 'form-horizontal')) !!}
 
 <div class="form-group">
-	{!! Form::label('uuid', 'UUID', array('class' => 'col-sm-2 control-label')) !!}
+	{!! Form::label('message', 'Mensaje', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
-		{!! Form::text('uuid', Input::old('uuid', $data->uuid), array('class'=>'form-control')) !!}
-		@if($errors->has('uuid'))
-		<div class="error"><small>El UUID debe tener al menos 10 caracteres</small></div>
+		{!! Form::text('message', Input::old('message', $data->message), array('class'=>'form-control')) !!}
+		@if($errors->has('message'))
+		<div class="error"><small>El título debe tener entre 10 a 100 caracteres</small></div>
 		@endif
+	</div>
+</div>
+
+<div class="form-group">
+	{!! Form::label('scheduled', 'Fecha', array('class' => 'col-sm-2 control-label')) !!}
+	<div class="col-sm-10">
+		<div class='input-group date datetimepicker'>
+			{!! Form::text('scheduled', Input::old('scheduled', $data->scheduled), array('class'=>'form-control')) !!}
+			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+        </div>
 	</div>
 </div>
 

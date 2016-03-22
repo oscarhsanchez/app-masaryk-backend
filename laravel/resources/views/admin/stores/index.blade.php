@@ -34,7 +34,7 @@
 
 <div class="panel panel-default"> 
 
-	<div class="panel-body">
+	<div class="panel-body table-responsive">
 		<table class="table table-condensed table-striped table-hover">
 		<thead>
 			<tr>
@@ -43,8 +43,8 @@
 				<th>Dirección</th>
 				<th>Teléfono</th>
 				<th>Tipo</th>
-				<th class="short-column">Activo</th>
-				<th class="action"></th>
+				<th class="col-md-1 text-center">Activo</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -55,13 +55,15 @@
 				<td>{!! strlen($row->address) > 50 ? (substr($row->address, 0, 50)."...") : $row->address !!}</td>
 				<td>{!! $row->phone !!}</td>
 				<td>{!! $row->type ? $row->type->name : 'N/A' !!}</td>
-				<td class="short-column"> 
+				<td class="text-center"> 
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="action text-right">
-					<a href='{!! URL::to('admin/stores/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
-					<a href='{!! URL::to('admin/stores/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span><!-- Eliminar --></a>
+				<td class="action">
+					<a href='{!! URL::to('admin/stores/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span></a>
+				</td>
+				<td class="action">
+					<a href='{!! URL::to('admin/stores/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span></a>
 				</td>
 			</tr>
 	    @endforeach			

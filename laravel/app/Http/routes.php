@@ -29,7 +29,7 @@ Route::group(['middleware' => ['web', 'auth']], function () {
 		Route::controller('promos', 	"PromosController");
 		Route::controller('stores', 	"StoresController");
 		Route::controller('activities', "ActivitiesController");
-		Route::controller('beacons', 	"BeaconsController");
+		Route::controller('notifications', "NotificationsController");
 	});
 });
 

@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
 use Input, Validator, View, Redirect, App\User, App\Models\Store, App\Models\StoreType;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
 
 class StoresController extends Controller {
 

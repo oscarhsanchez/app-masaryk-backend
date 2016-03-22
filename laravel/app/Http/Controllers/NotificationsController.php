@@ -1,13 +1,12 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, App\User, App\Models\Beacon;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Input, Validator, View, Redirect, App\User, App\Models\Notification;
 
-class BeaconsController extends Controller {
+class NotificationsController extends Controller {
 
 	/*
 	|--------------------------------------------------------------------------
-	| Beacons Controller
+	| Notifications Controller
 	|--------------------------------------------------------------------------
 	*/
 	
@@ -30,7 +29,7 @@ class BeaconsController extends Controller {
 	/**
 	 * delete function.
 	 * 
-	 * @description Elimina una beacon de la base de datos 	 
+	 * @description Elimina una notificacion de la base de datos 	 
 	 * @access public
 	 * @param mixed $id (default: null)
 	 * @return void
@@ -38,21 +37,21 @@ class BeaconsController extends Controller {
 	public function getDelete($id = null) {	
 		
 		if (!$data = $this->_validate($id)) {
-			return Redirect::to('admin/beacons');
+			return Redirect::to('admin/notifications');
 		}
 		
-		return View::make('admin.beacons.delete')->with("data", $data->title);
+		return View::make('admin.notifications.delete')->with("data", $data->title);
 	}
 	
 	public function postDelete($id = null) {	
 		
 		if (!$data = $this->_validate($id)) {
-			return Redirect::to('admin/beacons');
+			return Redirect::to('admin/notifications');
 		}
 			
 		$data->delete();
 		
-		return Redirect::to('admin/beacons')->with("message", "¡Beacon eliminada!");
+		return Redirect::to('admin/notifications')->with("message", "¡Notificación eliminada!");
 	}
 	
     
@@ -60,34 +59,37 @@ class BeaconsController extends Controller {
 	/**
 	 * add function.
 	 * 
-	 * @description Agrega una promoción a base de datos	 
+	 * @description Agrega una notificacion a base de datos	 
 	 * @access public
 	 * @return void
 	 */
 	 	
 	public function getAdd() {
 										   		
-		return View::make('admin.beacons.add');			
+		return View::make('admin.notifications.add');			
 		
 	}
 	
 	public function postAdd() {
 
 		$input = Input::all();
-		$rules = array("uuid" => "required|min:10");
+		$rules = array("message" => "required|min:10|max:100");
 		
 		$validation = Validator::make($input, $rules);
 		if ($validation->fails()) {
-			return Redirect::to('admin/beacons/add')->withErrors($validation)->withInput();
+			return Redirect::to('admin/notifications/add')->withErrors($validation)->withInput();
 			
 		} else {
 
-			$data = new Beacon();
-			$data->uuid   = Input::get('uuid');	
-			$data->active = Input::get("active", 0);	
+			$data = new Notification();
+			$data->message   = Input::get('message');	
+			$data->scheduled = Input::get("scheduled", "0000-00-00 00:00:00");
+			$data->current 	 = 0;
+			$data->completed = 0;
+			$data->active 	 = 0;	
 			$data->save();
 			
-			return Redirect::to('admin/beacons')->with("message", "El beacon ha sido agreado");	
+			return Redirect::to('admin/notifications')->with("message", "La notificación ha sido agreada");	
 		}
 		
 	}
@@ -97,7 +99,7 @@ class BeaconsController extends Controller {
 	/**
 	 * edit function.
 	 * 
-	 * @description Edita una promoción de la base de datos	 
+	 * @description Edita una notificacion de la base de datos	 
 	 * @access public
 	 * @param mixed $id (default: null)
 	 * @return void
@@ -106,33 +108,34 @@ class BeaconsController extends Controller {
 	public function getEdit($id = null) {
 	
 		if (!$data = $this->_validate($id)) {
-			return Redirect::to('promos');
+			return Redirect::to('notifications');
 		}
 												   		
-		return View::make('admin.beacons.edit')->with("data", $data);			
+		return View::make('admin.notifications.edit')->with("data", $data);			
 		
 	}
 	
 	public function postEdit($id = null) {
 			
 		if (!$data = $this->_validate($id)) {
-			return Redirect::to('promos');
+			return Redirect::to('notifications');
 		}	
 			
 		$input = Input::all();
-		$rules = array("uuid" => "required|min:10");
+		$rules = array("message" => "required|min:10|max:100");
 		
 		$validation = Validator::make($input, $rules);
 		if ($validation->fails()) {
-			return Redirect::to('admin/beacons/edit/'.$id)->withErrors($validation)->withInput();
+			return Redirect::to('admin/notifications/edit/'.$id)->withErrors($validation)->withInput();
 			
 		} else {
 
-			$data->uuid   = Input::get('uuid');			
-			$data->active = Input::get("active", 0);
+			$data->message   = Input::get('message');	
+			$data->scheduled = Input::get("scheduled", "0000-00-00 00:00:00");			
+			$data->active 	 = Input::get("active", 0);
 			$data->save();
 			
-			return Redirect::to('admin/beacons/edit/'.$id)->with("message", "El beacon ha sido guardado");	
+			return Redirect::to('admin/notifications/edit/'.$id)->with("message", "La notificación ha sido guardada");	
 		}
 		
 	}
@@ -142,7 +145,7 @@ class BeaconsController extends Controller {
 	/**
 	 * index function.
 	 * 
-	 * @description Listado de promociones de la base de datos	 
+	 * @description Listado de notificaciones de la base de datos	 
 	 * @access public
 	 * @return void
 	 */
@@ -155,7 +158,7 @@ class BeaconsController extends Controller {
 		$order 	= Input::get('order' , 'id|asc');
 			
 			
-		$rows   = Beacon::where("id", ">", 0);
+		$rows   = Notification::where("id", ">", 0);
 										   
 		if ($search != "") {
 			$where_search = '(title LIKE ?)';
@@ -169,7 +172,7 @@ class BeaconsController extends Controller {
 		$rows->take($limit)->skip($page * $limit)->orderBy($order[0], $order[1]);
 		$rows = $rows->get();
 			   								   
-		return View::make('admin.beacons.index')->with("rows",  $rows)
+		return View::make('admin.notifications.index')->with("rows",  $rows)
 											   ->with("search", $search)
 											   ->with("page",   $page)
 											   ->with("limit",  $limit)
@@ -190,7 +193,7 @@ class BeaconsController extends Controller {
 			return false;
 		}
 
-		$data = Beacon::find($id);
+		$data = Notification::find($id);
 		if ($data === null) {
 			return false;
 		}

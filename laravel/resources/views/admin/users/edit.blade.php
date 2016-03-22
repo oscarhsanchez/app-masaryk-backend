@@ -110,12 +110,4 @@
   
 {!! Form::close() !!}
 
-<script type="text/javascript">
-
-	jQuery(document).ready(function(){		
-		$('.datetimepicker').datetimepicker({defaultDate:"moment", format:"YYYY-MM-DD"});
-	})
-
-</script>
-
 @endsection

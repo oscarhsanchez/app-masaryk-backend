@@ -1,7 +1,7 @@
 @extends('admin.template')
 
 @section('title')
-	Beacons
+	Notificaciones
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
 <?PHP $order_url = preg_replace('/(?:&|(\?))' . "order" . '=[^&]*(?(1)&|)?/i', '$1', $_SERVER['QUERY_STRING']); ?>
 
 <div class="page-header">
-	<h2>Beacons</h2>
+	<h2>Notificaciones</h2>
 </div>
 
 @if (Session::get('message'))
@@ -34,28 +34,36 @@
 
 <div class="panel panel-default"> 
 
-	<div class="panel-body">
+	<div class="panel-body table-responsive">
 		<table class="table table-condensed table-striped table-hover">
 		<thead>
 			<tr>
-				<th>UUID</th>
-				<th>Promos</th>
-				<th class="short-column">Activo</th>
-				<th class="action"></th>
+				<th>Mensaje</th>
+				<th>Fecha</th>
+				<th class="col-md-1 text-center">Despachado</th>
+				<th class="col-md-1 text-center">Activo</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 		@foreach ($rows as $x => $row)
 			<tr class="{!! $x++%2==0?'odd':'even' !!}  @if ( $row->active == 0 ) text-muted @endif">
-				<td>{!! $row->uuid !!}</td>
-				<td></td>
-				<td> 
+				<td>{!! $row->message !!}</td>
+				<td>{!! $row->scheduled !!}</td>
+				<td class="text-center"> 
+					@if ($row->completed == 1)
+					Si @else No @endif
+				</td>
+				<td class="text-center"> 
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="action pull-right">
-					<a href='{!! URL::to('admin/beacons/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
-					<a href='{!! URL::to('admin/beacons/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span><!-- Eliminar --></a>
+				<td class="action">
+					<a href='{!! URL::to('admin/notifications/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span></a>
+				</td>
+				<td class="action">
+					<a href='{!! URL::to('admin/notifications/delete/'.$row->id) !!}' class='btn btn-danger'><span class="glyphicon glyphicon-remove"></span></a>
 				</td>
 			</tr>
 	    @endforeach			

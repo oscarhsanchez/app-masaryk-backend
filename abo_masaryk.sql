@@ -7,7 +7,7 @@
 #
 # Host: abostudio.mx (MySQL 5.5.45-cll-lve)
 # Database: abo_masaryk
-# Generation Time: 2016-03-15 07:17:31 +0000
+# Generation Time: 2016-03-22 09:11:30 +0000
 # ************************************************************
 
 
@@ -32,7 +32,6 @@ CREATE TABLE `activities` (
   `address` text,
   `date_from` datetime DEFAULT NULL,
   `date_to` datetime DEFAULT NULL,
-  `date_alert` datetime DEFAULT NULL,
   `lat` decimal(10,8) DEFAULT NULL,
   `lng` decimal(11,8) DEFAULT NULL,
   `url` text,
@@ -48,12 +47,12 @@ CREATE TABLE `activities` (
 LOCK TABLES `activities` WRITE;
 /*!40000 ALTER TABLE `activities` DISABLE KEYS */;
 
-INSERT INTO `activities` (`id`, `title`, `description`, `address`, `date_from`, `date_to`, `date_alert`, `lat`, `lng`, `url`, `type_id`, `status_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
+INSERT INTO `activities` (`id`, `title`, `description`, `address`, `date_from`, `date_to`, `lat`, `lng`, `url`, `type_id`, `status_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-	(1,'Carrera Masaryk','Vive la emoción con la primera carrera deportiva en Av. Masaryk.','Masaryk #451','2016-01-31 16:30:00','2016-01-31 17:30:00','2016-03-01 08:06:00',19.43015530,-99.19506210,'http://caminamasaryk.com/',2,1,1,'2016-02-01 04:57:00','2016-03-09 02:12:42',NULL),
-	(2,'Clases de Yoga','¡Continúan las actividades en Av. Masaryk! Realizan clase masiva de Yoga!','Masaryk #54','2016-01-31 14:00:00','2016-01-31 14:45:00',NULL,19.43161226,-99.19712204,'http://caminamasaryk.com',1,1,1,'2016-02-01 04:57:34','2016-02-04 05:44:01',NULL),
-	(3,'México y Reino Unido celebran con subasta','México y Reino Unido celebran con una subasta con grandes premios.','Masaryk #201','2016-02-03 09:15:00','2016-02-03 10:00:00',NULL,19.43193602,-99.19935363,'http://caminamasaryk.com',1,2,1,'2016-02-04 05:46:59','2016-02-04 05:46:59',NULL),
-	(4,'Fashion Night','Celebra una noche con música DJ.','Masaryk #101','2016-02-03 13:00:00','2016-02-03 15:00:00',NULL,19.43015530,-99.19506210,'http://caminamasaryk.com',2,3,1,'2016-02-04 05:48:27','2016-02-04 05:48:27',NULL);
+	(1,'Carrera Masaryk','Vive la emoción con la primera carrera deportiva en Av. Masaryk.','Masaryk #451','2016-01-31 16:30:00','2016-01-31 17:30:00',19.43015530,-99.19506210,'http://caminamasaryk.com/',2,1,1,'2016-02-01 04:57:00','2016-03-09 02:12:42',NULL),
+	(2,'Clases de Yoga','¡Continúan las actividades en Av. Masaryk! Realizan clase masiva de Yoga!','Masaryk #54','2016-01-31 14:00:00','2016-01-31 14:45:00',19.43161226,-99.19712204,'http://caminamasaryk.com',1,1,1,'2016-02-01 04:57:34','2016-02-04 05:44:01',NULL),
+	(3,'México y Reino Unido celebran con subasta','México y Reino Unido celebran con una subasta con grandes premios.','Masaryk #201','2016-02-03 09:15:00','2016-02-03 10:00:00',19.43193602,-99.19935363,'http://caminamasaryk.com',1,2,1,'2016-02-04 05:46:59','2016-02-04 05:46:59',NULL),
+	(4,'Fashion Night','Celebra una noche con música DJ.','Masaryk #101','2016-02-03 13:00:00','2016-02-03 15:00:00',19.43015530,-99.19506210,'http://caminamasaryk.com',2,3,1,'2016-02-04 05:48:27','2016-02-04 05:48:27',NULL);
 
 /*!40000 ALTER TABLE `activities` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -112,32 +111,6 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table beacons
-# ------------------------------------------------------------
-
-DROP TABLE IF EXISTS `beacons`;
-
-CREATE TABLE `beacons` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) DEFAULT NULL,
-  `active` tinyint(4) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `deleted_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
-LOCK TABLES `beacons` WRITE;
-/*!40000 ALTER TABLE `beacons` DISABLE KEYS */;
-
-INSERT INTO `beacons` (`id`, `uuid`, `active`, `created_at`, `updated_at`, `deleted_at`)
-VALUES
-	(1,'0117C5358438',1,'2016-02-01 05:54:41','2016-02-01 05:54:41',NULL);
-
-/*!40000 ALTER TABLE `beacons` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
 # Dump of table migrations
 # ------------------------------------------------------------
 
@@ -157,6 +130,36 @@ VALUES
 	('2016_03_09_023322_entrust_setup_tables',1);
 
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+# Dump of table notifications
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `notifications`;
+
+CREATE TABLE `notifications` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `message` varchar(255) DEFAULT NULL,
+  `scheduled` datetime DEFAULT NULL,
+  `current` int(11) DEFAULT NULL,
+  `completed` int(11) DEFAULT NULL,
+  `active` int(1) DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+LOCK TABLES `notifications` WRITE;
+/*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
+
+INSERT INTO `notifications` (`id`, `message`, `scheduled`, `current`, `completed`, `active`, `created_at`, `updated_at`, `deleted_at`)
+VALUES
+	(1,'0117C5358438','0000-00-00 00:00:00',0,0,0,'2016-02-01 05:54:41','2016-02-01 05:54:41',NULL),
+	(2,'Prueba de notificacion','2016-03-22 03:10:00',24,1,1,'2016-03-22 08:01:18','2016-03-22 09:10:02',NULL);
+
+/*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
@@ -238,7 +241,6 @@ DROP TABLE IF EXISTS `promos`;
 CREATE TABLE `promos` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
-  `beacon_id` int(11) DEFAULT '0',
   `store_id` int(11) DEFAULT '0',
   `active` tinyint(4) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -250,17 +252,17 @@ CREATE TABLE `promos` (
 LOCK TABLES `promos` WRITE;
 /*!40000 ALTER TABLE `promos` DISABLE KEYS */;
 
-INSERT INTO `promos` (`id`, `title`, `beacon_id`, `store_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
+INSERT INTO `promos` (`id`, `title`, `store_id`, `active`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-	(2,'Barbería Capital',0,0,1,'2016-02-01 05:32:09','2016-02-03 07:38:18',NULL),
-	(3,'Raven Music',0,1,1,'2016-02-01 06:43:44','2016-02-03 07:40:03',NULL),
-	(4,'Harry Grill',0,0,1,'2016-02-03 07:41:08','2016-02-03 07:41:08',NULL),
-	(5,'De Antro',0,0,1,'2016-02-03 07:41:53','2016-02-03 07:41:53',NULL),
-	(6,'Celtics',0,0,1,'2016-02-03 07:42:47','2016-02-03 07:42:47',NULL),
-	(7,'Las Alitas',0,0,1,'2016-02-03 07:43:08','2016-02-03 07:43:08',NULL),
-	(8,'Costeñito Market',0,0,1,'2016-02-03 07:43:40','2016-02-03 07:43:40',NULL),
-	(9,'The Key',0,0,1,'2016-02-03 07:44:18','2016-02-03 07:44:18',NULL),
-	(10,'La Chilanguita',0,0,1,'2016-02-03 07:45:20','2016-02-03 07:45:20',NULL);
+	(2,'Barbería Capital',0,1,'2016-02-01 05:32:09','2016-02-03 07:38:18',NULL),
+	(3,'Raven Music',1,1,'2016-02-01 06:43:44','2016-02-03 07:40:03',NULL),
+	(4,'Harry Grill',0,1,'2016-02-03 07:41:08','2016-02-03 07:41:08',NULL),
+	(5,'De Antro',0,1,'2016-02-03 07:41:53','2016-02-03 07:41:53',NULL),
+	(6,'Celtics',0,1,'2016-02-03 07:42:47','2016-02-03 07:42:47',NULL),
+	(7,'Las Alitas',0,1,'2016-02-03 07:43:08','2016-02-03 07:43:08',NULL),
+	(8,'Costeñito Market',0,1,'2016-02-03 07:43:40','2016-02-03 07:43:40',NULL),
+	(9,'The Key',0,1,'2016-02-03 07:44:18','2016-02-03 07:44:18',NULL),
+	(10,'La Chilanguita',0,1,'2016-02-03 07:45:20','2016-02-03 07:45:20',NULL);
 
 /*!40000 ALTER TABLE `promos` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -424,7 +426,7 @@ LOCK TABLES `users` WRITE;
 
 INSERT INTO `users` (`id`, `facebook_id`, `email`, `password`, `first_name`, `last_name`, `city`, `birthday`, `phone`, `remember_token`, `facebook_token`, `active`, `created_at`, `updated_at`, `deleted_at`, `last_login`)
 VALUES
-	(1,'100000119631602','daniel.fer@avanna.com.mx','$2y$10$DVtfLJukAu5z3qCDpY5uwe/9WcBjH6/Xk5ISkUQLJUf2z4RW4hq.m','Daniel1','Fernández','México','0000-00-00','555555555','2WVEXm9FXqNdNJXv5YcAhxMmEWP0h0uV5ROrti7mRapR2wDhoXJ3VHyYkpvj','CAAO2AcRaUI0BAELqSyT8gZBcWyOWznD5mtPCTE3EUatDfvPpclhbU6s3f7EGCZB1thi0P4Nqj76Lr44VPFyhLwHK62e9dlxp1kkYmaSwFcus852NqCxWfZCURZBk8hBZCSVmlkwXCBf5kdORpfDS1HUP6FF1d6JjbQW78VZBvhZAplDxtUjH6UCnZBnDLPmbZCz4lliitkhBvVWTkUw29sJ7ZATBOMJzuHB9fcT6anWYpnqgZDZD',1,'2016-03-08 21:29:59','2016-03-09 04:29:59',NULL,'2016-03-09 00:38:22'),
+	(1,'100000119631602','daniel.fer@avanna.com.mx','$2y$10$DVtfLJukAu5z3qCDpY5uwe/9WcBjH6/Xk5ISkUQLJUf2z4RW4hq.m','Daniel1','Fernández',NULL,'0000-00-00','555555555','wVYHMK2hZ7zFGyoTed4ZTE7B5I9AqTe68RXFw63N1yNJvEkbmxONBoFdDTAE','CAAO2AcRaUI0BAELqSyT8gZBcWyOWznD5mtPCTE3EUatDfvPpclhbU6s3f7EGCZB1thi0P4Nqj76Lr44VPFyhLwHK62e9dlxp1kkYmaSwFcus852NqCxWfZCURZBk8hBZCSVmlkwXCBf5kdORpfDS1HUP6FF1d6JjbQW78VZBvhZAplDxtUjH6UCnZBnDLPmbZCz4lliitkhBvVWTkUw29sJ7ZATBOMJzuHB9fcT6anWYpnqgZDZD',1,'2016-03-15 11:36:28','2016-03-15 18:16:53',NULL,'2016-03-09 00:38:22'),
 	(2,'','john.doe@example.com','$2y$10$QI2pcHK2vvSkVdFYLOEjGu1GRMuz.oYZ5JeQWnBbD.6hZQfVoRP6S','John','Doe','México','2014-03-10','','$2y$10$OleO8N6IURAGF58pI8jQi.MIMTrr9mGb6/zkPJ73RzgNffRhBPwra','',1,'2016-02-22 17:55:38','2016-02-01 22:41:06',NULL,'0000-00-00 00:00:00'),
 	(3,'','juanperez@hotmail.com','$2y$10$hI7DSjqOPxEJLrMsVzFmg.5NfN6Ss0mc8FRvHw0UassmltnTLPpNK','Juan','Peréz','México','0000-00-00','','$2y$10$ZIwuLtjkVqT5hDlhyMuthenZjBDVUAZAsdSxyHKoHC/qYvNlc/VeW','',1,'2016-02-22 17:55:39','2016-02-01 20:59:13',NULL,'0000-00-00 00:00:00'),
 	(4,'','lamaria@gmail.com','$2y$10$D6TkA1QUuE/vAhkuod28o.EoFQ/8/vdA4Gq.PrbnHuI3EJw2D8Lfe','María1','Saenz1','Sonora','2016-03-08','','$2y$10$lTwGUay8IhKOdSXHJbLFBeU.6R.AN6MHhlbqOWclK4TqtZzt4XJ1.','',1,'2016-03-08 19:50:24','2016-03-09 02:50:24',NULL,'0000-00-00 00:00:00'),
@@ -434,7 +436,7 @@ VALUES
 	(13,'','andrea@avanna.com.mx','$2y$10$6oqz4wEdWkkWRpJCLUnJG.xc329Pj.OnyQ4oW7JFfyhdVP4b047Fy','Andrea ','Villanuevs','Mexico','1987-10-16',NULL,'$2y$10$MJU7XGfwqLCg/P.zSAJqx.vtPe/VzU5j5KyWt5TmZOSvePMc3XnqC','',1,'2016-02-23 15:36:15','2016-02-23 22:36:15',NULL,'2016-02-23 22:36:15'),
 	(14,'','tangamampilia@hotmail.com','$2y$10$rqDfItqne.CqkRay.C6NSufUd/M1fDv1Xvzg5eWduiRIA3sp2WWd2','Daniel','Fernandez','Mexico','1995-12-02',NULL,'$2y$10$q5BxdrXzaDVxgzWRTYdAqO2ccWvwTXo6ruEYYMeLkrnsmBpCMcvHK','',1,'2016-03-08 22:31:36','2016-03-09 05:31:36',NULL,'2016-02-24 18:57:50'),
 	(15,'','jaime.banus@rbconsulting.es','$2y$10$KA11QFDoZ58gVd1O8PHa9uGUjX/0vQsEiZIVvHo6Almt4IO0kckNG','jaine','banus','Madrid','1980-10-07',NULL,'$2y$10$O1YshYnl4.dFWsDeqHNeIOtPheQhfBe.j1uPu3L5H5TDdqrWm6YHG','',1,'2016-03-06 06:15:30','2016-03-06 13:15:30',NULL,'2016-03-06 13:15:30'),
-	(16,'','test@test.com','$2y$10$pUPfyfONfjDtiy6llKzPou68D3kaHV2QydFtNHKFpPbqneFp1qsXG','test','test','test','0000-00-00',NULL,'cyFYTF09fULtOkm6VQh2IJiZ4VbIB7QQ7zjxH0EIUWjF57kt0JRK542L7tVC','',1,'2016-03-08 20:44:52','2016-03-09 03:44:52',NULL,'0000-00-00 00:00:00');
+	(16,'','test@test.com','$2y$10$pUPfyfONfjDtiy6llKzPou68D3kaHV2QydFtNHKFpPbqneFp1qsXG','test','test','test',NULL,NULL,'cyFYTF09fULtOkm6VQh2IJiZ4VbIB7QQ7zjxH0EIUWjF57kt0JRK542L7tVC','',1,'2016-03-15 11:22:13','2016-03-09 03:44:52',NULL,'0000-00-00 00:00:00');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -467,12 +469,12 @@ VALUES
 UNLOCK TABLES;
 
 
-# Dump of table users_notifications
+# Dump of table users_tokens
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `users_notifications`;
+DROP TABLE IF EXISTS `users_tokens`;
 
-CREATE TABLE `users_notifications` (
+CREATE TABLE `users_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
   `device` varchar(11) DEFAULT NULL,
@@ -483,20 +485,17 @@ CREATE TABLE `users_notifications` (
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
-LOCK TABLES `users_notifications` WRITE;
-/*!40000 ALTER TABLE `users_notifications` DISABLE KEYS */;
+LOCK TABLES `users_tokens` WRITE;
+/*!40000 ALTER TABLE `users_tokens` DISABLE KEYS */;
 
-INSERT INTO `users_notifications` (`id`, `user_id`, `device`, `token`, `created_at`, `updated_at`, `deleted_at`)
+INSERT INTO `users_tokens` (`id`, `user_id`, `device`, `token`, `created_at`, `updated_at`, `deleted_at`)
 VALUES
-	(1,1,'iOS','8e1a7d6d4a4faee175f8787889cf41c85dcb08686882451a3b390a37523802a9','2016-02-25 02:59:34','2016-02-25 02:59:34',NULL),
-	(3,12,'iOS','8ef563a57047a59fa297231217e424ccb13b25e8f8027681e02e533ea5b28fdc','2016-02-25 04:37:09','2016-02-25 04:37:09',NULL),
-	(4,1,'iOS','7318d8ef221f79473f6306256962c233bc149d1b5a144ae9767b4766d741ddff','2016-02-28 01:40:54','2016-02-28 01:40:54',NULL),
-	(8,1,'iOS','e1169d863b0883bb1f01f048f9e84b8c143c3d3db96f7ab56ffb0b4fe5f42d21','2016-03-09 00:38:22','2016-03-09 00:38:22',NULL),
-	(9,14,'iOS','6b55313df06096a2be047f109c0f2a61e1905555285ec648eeb58d221d1eb07c','2016-03-09 03:28:23','2016-03-09 05:32:01',NULL),
+	(24,1,'iOS','ec5a7e812a3010062c2df5fe1e4461d676afe91b45b031fbba122ae9a8c951c6','2016-03-22 08:58:57','2016-03-22 08:58:57',NULL),
 	(20,1,'Android','frvDxFJ5g3s:APA91bFYU4PSj_bLl2cJ7xnhyhaWI98O4wg8WsuAvzA4kxhRfarHAFY5GI8Fnqexv3Lc7AfaxztuBnu-V2QTSd_HdnHj9C7L2QaAH0BhC_qvMg-T32p9oLPjIxbdTTg-SJZnRa8_SyEu','2016-03-09 18:11:56','2016-03-09 18:11:56',NULL),
-	(21,1,'iOS','53a11ca7c6d54ee519b3b7a29923427bc9ceddeff225d1f99bf4a610b4fae367','2016-03-10 00:15:01','2016-03-10 00:15:01',NULL);
+	(23,1,'iOS','6d7d84dac7cabe225adbc03aed2c5612e8dc3da7311ca3c1adc952c0b0aaf8d2','2016-03-22 08:35:34','2016-03-22 08:35:34',NULL),
+	(22,1,'Android','fxrTYu1KlC4:APA91bH7Uwob-RqcxN9_daAC2U65sQQptm1pvbzTga4dSicSVATqxCLkJ54V1ZQwVrYueu8FqMuplalCepwv1IIHI2e0jsyELJ2c9Qz3-CdVbvGId8Mg0XR1xtb18ac_VnjRtDqz-JKq','2016-03-16 01:51:05','2016-03-16 01:51:05',NULL);
 
-/*!40000 ALTER TABLE `users_notifications` ENABLE KEYS */;
+/*!40000 ALTER TABLE `users_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
 

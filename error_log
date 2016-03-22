@@ -53,3 +53,5 @@
 [09-Mar-2016 05:22:03 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Session' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ApiController.php on line 205
 [09-Mar-2016 05:54:21 UTC] PHP Fatal error:  Class 'App\Http\Controllers\ActivityStatus' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ActivitiesController.php on line 135
 [09-Mar-2016 05:54:51 UTC] PHP Fatal error:  Class 'App\Http\Controllers\ActivityStatus' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/ActivitiesController.php on line 135
+[22-Mar-2016 08:01:07 UTC] PHP Fatal error:  Class 'App\Http\Controllers\Beacon' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/NotificationsController.php on line 84
+[22-Mar-2016 08:42:10 UTC] PHP Fatal error:  Class 'App\Http\Controllers\File' not found in /home/abostudio/public_html/domains/masaryk.avanna.tech/laravel/app/Http/Controllers/HomeController.php on line 65

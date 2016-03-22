@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, Auth, App\User;
+use Input, Validator, View, Redirect, Auth, File, App\User;
 use Cartalyst\Sentinel\Native\Facades\Sentinel;
 use Cartalyst\Sentinel\Laravel\Facades\Activation;
 use Illuminate\Foundation\Auth\ResetsPasswords;

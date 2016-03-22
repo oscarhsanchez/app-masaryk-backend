@@ -1,7 +1,6 @@
 <?php namespace App\Http\Controllers;
 
-use Input, Validator, View, Redirect, App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Option;
-use Cartalyst\Sentinel\Native\Facades\Sentinel;
+use Input, Validator, View, Redirect, App\User, App\Models\Promo, App\Models\Store, App\Models\Option;
 
 class PromosController extends Controller {
 
@@ -68,10 +67,8 @@ class PromosController extends Controller {
 	public function getAdd() {
 		
 		$stores  = array("-------------------") + Store::lists("title", "id")->toArray();
-		$beacons = array("-------------------") + Beacon::lists("uuid", "id")->toArray();
 										   		
-		return View::make('admin.promos.add')->with("stores",  $stores)
-											 ->with("beacons", $beacons);			
+		return View::make('admin.promos.add')->with("stores",  $stores);			
 		
 	}
 	
@@ -89,7 +86,6 @@ class PromosController extends Controller {
 			$data = new Promo();
 			$data->title 	 = Input::get('title');
 			$data->store_id  = Input::get('store');
-			$data->beacon_id = Input::get('beacon');	
 			$data->active 	 = Input::get("active", 0);	
 			$data->save();
 			
@@ -123,11 +119,9 @@ class PromosController extends Controller {
 		}
 		
 		$stores  = array("-------------------") + Store::lists("title", "id")->toArray();
-		$beacons = array("-------------------") + Beacon::lists("uuid", "id")->toArray();
 												   		
 		return View::make('admin.promos.edit')->with("data", 	$data)
-											  ->with("stores",  $stores)
-											  ->with("beacons", $beacons);		
+											  ->with("stores",  $stores);		
 		
 	}
 	
@@ -148,7 +142,6 @@ class PromosController extends Controller {
 
 			$data->title  	 = Input::get('title');	
 			$data->store_id  = Input::get('store');
-			$data->beacon_id = Input::get('beacon');		
 			$data->active 	 = Input::get("active", 0);
 			$data->save();
 			

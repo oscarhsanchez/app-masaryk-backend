@@ -8,3 +8,5 @@ html,body{min-height:100%;font-family:'Open Sans', sans-serif}
 .error {color: #f00;}
 .dropdown:hover .dropdown-menu {display: block;}
 .table > tbody > tr > td {vertical-align: middle;}
+.radio-inline input[type=radio] {position: inherit; margin: 0 !important;}
+td.action {width: 44px; text-align: center;}

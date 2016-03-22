@@ -1,7 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Input, Validator, View, Response, DB, Mail, URL, Auth, Session;
-use App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity, App\Models\UserNotification, App\Models\Option;
+use App\User, App\Models\Promo, App\Models\Store, App\Models\Beacon, App\Models\Activity, App\Models\UserToken, App\Models\Option;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Mail\Message;
@@ -109,10 +109,10 @@ class ApiController extends Controller {
 			$data->facebook_id  = Input::get('fb_id', '');
 			$data->email 		= Input::get('email');
 			$data->password 	= bcrypt(Input::get('password'));	
-			$data->first_name 	= Input::get('first_name');	
-			$data->last_name	= Input::get('last_name');	
-			$data->birthday 	= Input::get('birthday');	
-			$data->city 		= Input::get('city');	
+			$data->first_name 	= Input::get('first_name', '');	
+			$data->last_name	= Input::get('last_name', '');	
+			$data->birthday 	= Input::get('birthday', '');	
+			$data->city 		= Input::get('city', '');	
 			$data->remember_token = $remember_token;
 			$data->facebook_token = Input::get('token', '');
 
@@ -570,10 +570,10 @@ class ApiController extends Controller {
 		
 		$token  = Input::get("token", "");
 		$device = Input::get("device", "");
-		$notification = UserNotification::where("device", "=", trim($device))->where("token", "=", trim($token))->first();
+		$notification = UserToken::where("device", "=", trim($device))->where("token", "=", trim($token))->first();
 				
 		if (!$notification) {
-			$notification = new UserNotification();
+			$notification = new UserToken();
 			$notification->user_id = $user->id;
 			$notification->device  = trim($device);
 			$notification->token   = trim($token);

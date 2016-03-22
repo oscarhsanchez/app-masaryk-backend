@@ -10,9 +10,5 @@ class Promo extends Content {
     public function store() {
         return $this->belongsTo('App\Models\Store');
     }
-    
-    public function beacon() {
-        return $this->belongsTo('App\Models\Beacon');
-    }
 	     
 }

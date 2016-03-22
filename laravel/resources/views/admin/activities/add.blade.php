@@ -64,26 +64,6 @@
 </div>
 
 <div class="form-group">
-	{!! Form::label('date_alert', 'Alerta', array('class' => 'col-sm-2 control-label')) !!}
-	<div class="col-sm-10">
-		<div class='input-group date datetimepicker'>
-			{!! Form::text('date_alert', Input::old('date_alert'), array('class'=>'form-control')) !!}
-			<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-        </div>
-	</div>
-</div>
-
-<!--
-<div class="form-group">
-	{!! Form::label('range', 'Horario', array('class' => 'col-sm-2 control-label')) !!}
-	<div class="col-sm-10">
-		{!! Form::text('date', Input::old('range', 12,14), array('class'=>'form-control slider', 'data-slider-min'=>0, 'data-slider-max'=>48, 'data-slider-step'=>'1', 'data-slider-value'=>'[0, 48]')) !!}
-		<span class="slider-value" style="padding-left:30px;"></span>
-	</div>
-</div>
--->
-
-<div class="form-group">
 	{!! Form::label('type', 'Tipo', array('class' => 'col-sm-2 control-label')) !!}
 	<div class="col-sm-10">
 		{!! Form::select('type', $types, Input::old('type'), array('class'=>'form-control')) !!}
@@ -173,9 +153,7 @@
 		map = $("#geocomplete").geocomplete("map");
 		map.setCenter(location);
 		map.setOptions({styles: styles});
-		
-		$('.datetimepicker').datetimepicker({defaultDate:"moment", format:"YYYY-MM-DD HH:mm"});
-		
+				
 	})
 
 </script>

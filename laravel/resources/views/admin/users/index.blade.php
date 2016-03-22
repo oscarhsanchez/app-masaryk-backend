@@ -34,7 +34,7 @@
 
 <div class="panel panel-default"> 
 
-	<div class="panel-body">
+	<div class="panel-body table-responsive">
 		<table class="table table-condensed table-striped table-hover">
 		<thead>
 			<tr>
@@ -43,8 +43,8 @@
 				<th>Apellido</th>
 				<th>Correo</th>
 				<th>Creado</th>
-				<th class="short-column">Activo</th>
-				<th class="action"></th>
+				<th class="col-md-1 text-center">Activo</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -55,12 +55,12 @@
 				<td>{!! $row->last_name  == "" ? "--------" : $row->last_name !!}</td>
 				<td>{!! $row->email !!}</td>
 				<td>{!! $row->created_at !!}</td>
-				<td class="short-column"> 
+				<td class="text-center"> 
 					@if ($row->active == 1)
 					Si @else No @endif
 				</td>
-				<td class="action text-right">
-					<a href='{!! URL::to('admin/users/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span><!-- Editar --></a>
+				<td class="action">
+					<a href='{!! URL::to('admin/users/edit/'.$row->id) !!}' class='btn btn-success'><span class="glyphicon glyphicon-pencil"></span></a>
 				</td>
 			</tr>
 	    @endforeach			
